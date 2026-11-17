@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黑料吃瓜github51-聚合仓库与条目索引观察</title>
+<meta name="description" content="黑料吃瓜github51聚焦开源聚合仓库的条目索引与维护方式，拆解频道分类、更新节奏、检索方法与判断技巧，含榜单、时间线与体验指南，帮助读者看懂这类仓库如何组织、如何核验、如何在更新中取舍。">
+<meta name="keywords" content="黑料吃瓜github51">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161b22'/%3E%3Cpath d='M18 40l10-14 8 9 10-16' fill='none' stroke='%23f0b429' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='46' cy='19' r='4' fill='%23e05c4b'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f5f2ec;
+  --paper:#fffdf8;
+  --ink:#1f2429;
+  --ink-soft:#55606a;
+  --line:#ddd6c8;
+  --main:#161b22;
+  --main-2:#2a323c;
+  --accent:#c8472f;
+  --accent-soft:#f7e3dd;
+  --gold:#c9962b;
+  --gold-soft:#faf0d8;
+  --green:#2f6b4f;
+  --green-soft:#e2efe7;
+  --r-s:6px;
+  --r-m:10px;
+  --r-l:16px;
+  --sp-1:6px;
+  --sp-2:12px;
+  --sp-3:18px;
+  --sp-4:26px;
+  --sp-5:38px;
+  --sp-6:56px;
+  --shadow-1:0 1px 2px rgba(22,27,34,.07);
+  --shadow-2:0 6px 20px rgba(22,27,34,.09);
+  --fs-h1:clamp(1.85rem,4.2vw,2.9rem);
+  --fs-h2:clamp(1.3rem,2.4vw,1.65rem);
+  --fs-h3:1.06rem;
+  --fs-body:1rem;
+  --fs-sm:.875rem;
+  --fs-xs:.78rem;
+  --sticky-h:0px;
+  --font:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:118px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--font);font-size:var(--fs-body);line-height:1.75;
+  -webkit-text-size-adjust:100%;
+}
+img{max-width:100%;display:block}
+a{color:var(--main-2);text-decoration:none}
+a:hover{color:var(--accent)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:3px}
+h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:700;letter-spacing:.01em}
+p{margin:0 0 var(--sp-2)}
+ul,ol{margin:0 0 var(--sp-2);padding-left:1.25em}
+li{margin-bottom:4px}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 18px}
+
+/* ---------- 吸顶公告 + 页头 ---------- */
+.stickytop{position:sticky;top:0;z-index:60}
+.notice{
+  background:var(--main);color:#e8e2d6;font-size:var(--fs-xs);
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding:7px 18px;border-bottom:1px solid #000;
+}
+.notice b{color:var(--gold);font-weight:700;letter-spacing:.02em}
+.notice .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+.notice a{color:#f4d9a8;text-decoration:underline;text-underline-offset:2px}
+.sitehead{
+  background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);box-shadow:var(--shadow-1);
+}
+.headrow{display:flex;align-items:center;gap:16px;min-height:62px;flex-wrap:wrap;padding:8px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.02rem;color:var(--main)}
+.brand svg{flex:none}
+.brand small{display:block;font-size:var(--fs-xs);font-weight:500;color:var(--ink-soft);letter-spacing:.06em}
+.nav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+.nav a{padding:7px 10px;border-radius:var(--r-s);font-size:var(--fs-sm);color:var(--ink-soft)}
+.nav a:hover,.nav a:focus-visible{background:var(--gold-soft);color:var(--main)}
+.headtools{display:flex;gap:8px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;justify-content:center;
+  padding:8px 14px;border-radius:var(--r-s);border:1px solid var(--main);
+  background:var(--main);color:#fff;font-size:var(--fs-sm);font-weight:600;
+  cursor:pointer;transition:transform .14s ease,background .14s ease;
+}
+.btn:hover{background:var(--main-2);color:#fff;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--main);border-color:var(--line)}
+.btn.ghost:hover{background:var(--gold-soft);color:var(--main)}
+.menubtn{display:none}
+.searchbox{position:relative;display:flex;align-items:center}
+.searchbox input{
+  width:190px;padding:7px 10px 7px 30px;border:1px solid var(--line);border-radius:var(--r-s);
+  background:var(--paper);font-size:var(--fs-sm);color:var(--ink);font-family:var(--font);
+}
+.searchbox input:focus{border-color:var(--gold);outline-offset:0}
+.searchbox .mag{position:absolute;left:9px;pointer-events:none;color:var(--ink-soft)}
+#searchResult{font-size:var(--fs-xs);color:var(--accent);position:absolute;top:100%;right:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-s);padding:3px 8px;margin-top:4px;display:none;white-space:nowrap;box-shadow:var(--shadow-1)}
+#searchResult.show{display:block}
+mark.hit{background:var(--gold);color:var(--main);padding:0 1px;border-radius:2px}
+
+/* ---------- 首屏 ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 380px at 82% -10%, rgba(201,150,43,.20), transparent 62%),
+    radial-gradient(700px 320px at 6% 110%, rgba(200,71,47,.13), transparent 60%),
+    linear-gradient(160deg,#1a2027,#12161b 58%,#1d242c);
+  color:#f2ede2;padding:var(--sp-6) 0 var(--sp-5);
+}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+.hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:var(--fs-xs);letter-spacing:.18em;color:var(--gold);border:1px solid rgba(201,150,43,.5);padding:4px 10px;border-radius:999px;margin-bottom:16px}
+.hero h1{font-size:var(--fs-h1);color:#fff;letter-spacing:.01em;margin-bottom:14px;word-break:break-word}
+.hero .lede{color:#d5cfc2;font-size:1.02rem;max-width:34em;margin-bottom:20px}
+.hero .lede strong{color:#fff;font-weight:700}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#241a05}
+.btn.gold:hover{background:#dcac3a;color:#241a05}
+.btn.line{background:transparent;border-color:rgba(255,255,255,.35);color:#f2ede2}
+.btn.line:hover{background:rgba(255,255,255,.1);color:#fff;border-color:#fff}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:440px}
+.hero-stats div{border-top:2px solid rgba(240,180,41,.55);padding-top:8px}
+.hero-stats b{display:block;font-size:1.4rem;color:#fff;font-variant-numeric:tabular-nums}
+.hero-stats span{font-size:var(--fs-xs);color:#b8b1a4;letter-spacing:.04em}
+/* 原创 SVG 构图 */
+.hero-art{position:relative;aspect-ratio:1/0.92;max-width:420px;justify-self:end;width:100%}
+.hero-art svg{width:100%;height:100%;display:block}
+.hero-art figcaption{position:absolute;right:6px;bottom:-2px;font-size:var(--fs-xs);color:#a09889;letter-spacing:.05em}
+
+/* ---------- 通用区块 ---------- */
+.section{padding:var(--sp-5) 0}
+.section + .section{border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:var(--sp-3)}
+.sec-head h2{font-size:var(--fs-h2);color:var(--main)}
+.sec-head .idx{font-size:var(--fs-xs);color:var(--gold);font-weight:700;letter-spacing:.14em}
+.sec-head p{margin:0;color:var(--ink-soft);font-size:var(--fs-sm);max-width:52em}
+.eyebrow{font-size:var(--fs-xs);letter-spacing:.16em;color:var(--accent);font-weight:700;text-transform:uppercase}
+
+/* 布局 */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:34px;align-items:start}
+.layout-main{min-width:0}
+.side{position:sticky;top:132px;display:flex;flex-direction:column;gap:16px}
+.side-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:14px 16px;box-shadow:var(--shadow-1)}
+.side-card h3{font-size:var(--fs-sm);letter-spacing:.06em;color:var(--ink-soft);margin-bottom:8px}
+.side-nav a{display:block;padding:6px 8px;font-size:var(--fs-sm);border-radius:var(--r-s);color:var(--ink-soft);border-left:3px solid transparent}
+.side-nav a:hover{background:var(--gold-soft);color:var(--main)}
+.side-nav a.active{background:var(--gold-soft);color:var(--main);font-weight:700;border-left-color:var(--gold)}
+.side-nav a:focus-visible{outline-offset:0}
+
+/* 概览 */
+.overview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ov{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:14px;box-shadow:var(--shadow-1)}
+.ov h3{font-size:var(--fs-h3);margin-bottom:6px;color:var(--main)}
+.ov p{font-size:var(--fs-sm);color:var(--ink-soft);margin:0}
+.ov .num{display:inline-block;font-size:var(--fs-xs);color:var(--accent);font-weight:700;letter-spacing:.1em;margin-bottom:4px}
+.note-strip{margin-top:14px;background:var(--green-soft);border:1px solid #bfd8c8;border-radius:var(--r-m);padding:12px 16px;font-size:var(--fs-sm);color:#204c37}
+
+/* 精选卡片 */
+.pick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;box-shadow:var(--shadow-1);display:flex;flex-direction:column;transition:transform .16s ease,box-shadow .16s ease}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-2)}
+.card img{width:100%;height:132px;object-fit:cover}
+.card-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{font-size:1rem;color:var(--main)}
+.card p{font-size:var(--fs-sm);color:var(--ink-soft);margin:0}
+.card .meta{font-size:var(--fs-xs);color:#8a8274;margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}
+.tag{display:inline-block;font-size:var(--fs-xs);padding:1px 8px;border-radius:999px;background:var(--gold-soft);color:#6d4e05;border:1px solid #e6d3a2}
+.tag.red{background:var(--accent-soft);color:#8c2b17;border-color:#efc4b8}
+.tag.green{background:var(--green-soft);color:#204c37;border-color:#bfd8c8}
+
+/* 紧凑列表 */
+.slimlist{list-style:none;padding:0;margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}
+.slimlist li{display:grid;grid-template-columns:74px 1fr auto;gap:12px;align-items:baseline;padding:11px 14px;border-bottom:1px solid var(--line)}
+.slimlist li:last-child{border-bottom:0}
+.slimlist time{font-size:var(--fs-xs);color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.slimlist .t{font-size:var(--fs-sm);color:var(--main);font-weight:600}
+.slimlist .s{font-size:var(--fs-xs);color:#8a8274}
+
+/* 分类入口 */
+.catgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.cat{display:block;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:12px;transition:transform .14s ease,border-color .14s ease}
+.cat:hover{transform:translateY(-2px);border-color:var(--gold);color:var(--main)}
+.cat b{display:block;font-size:.95rem;color:var(--main);margin-bottom:2px}
+.cat span{font-size:var(--fs-xs);color:var(--ink-soft)}
+.cat em{display:block;font-style:normal;font-size:var(--fs-xs);color:var(--accent);margin-top:6px;font-weight:700}
+
+/* 深度解析 */
+.deep{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-l);padding:clamp(18px,3vw,34px);box-shadow:var(--shadow-1)}
+.deep > h2{font-size:var(--fs-h2);color:var(--main);margin-bottom:6px}
+.deep .byline{font-size:var(--fs-xs);color:#8a8274;margin-bottom:20px;letter-spacing:.04em}
+.deep h3{font-size:var(--fs-h3);margin:26px 0 8px;color:var(--main);padding-left:10px;border-left:4px solid var(--gold)}
+.deep h3:first-of-type{margin-top:6px}
+.deep p{font-size:.98rem;color:#2b3138}
+.deep ul{font-size:.96rem;color:#2b3138}
+.deep .callout{background:var(--gold-soft);border:1px solid #e6d3a2;border-radius:var(--r-m);padding:12px 16px;margin:16px 0;font-size:.94rem}
+.deep .callout b{color:#6d4e05}
+table.compare{width:100%;border-collapse:collapse;font-size:var(--fs-sm);margin:12px 0 6px}
+table.compare th,table.compare td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+table.compare th{background:#efe9dc;color:var(--main);font-weight:700;white-space:nowrap}
+table.compare td{background:var(--paper)}
+.factrow{display:grid;grid-template-columns:88px 1fr;gap:10px;font-size:var(--fs-sm);padding:7px 0;border-bottom:1px dashed var(--line)}
+.factrow:last-child{border-bottom:0}
+.factrow b{color:var(--accent);font-weight:700}
+
+/* 步骤 */
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:12px;counter-reset:step}
+.steps li{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:13px 16px 13px 58px;box-shadow:var(--shadow-1)}
+.steps li::before{
+  counter-increment:step;content:counter(step,decimal-leading-zero);
+  position:absolute;left:14px;top:13px;font-weight:800;font-size:1.05rem;color:var(--gold);
+  font-variant-numeric:tabular-nums;
+}
+.steps b{display:block;color:var(--main);font-size:.98rem;margin-bottom:2px}
+.steps span{font-size:var(--fs-sm);color:var(--ink-soft)}
+
+/* FAQ */
+.faq{display:grid;gap:10px}
+.faq details{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);box-shadow:var(--shadow-1)}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:.97rem;color:var(--main);list-style:none;position:relative;padding-right:40px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:1.15rem;color:var(--gold);font-weight:800}
+.faq details[open] summary::after{content:"–"}
+.faq details[open] summary{border-bottom:1px solid var(--line);background:var(--gold-soft);border-radius:var(--r-m) var(--r-m) 0 0}
+.faq .a{padding:12px 16px;font-size:var(--fs-sm);color:#2b3138}
+.faq .a p:last-child{margin-bottom:0}
+
+/* 评论 */
+.comments{display:grid;gap:12px}
+.cmt{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:13px 16px;box-shadow:var(--shadow-1)}
+.cmt .who{display:flex;align-items:center;gap:8px;font-size:var(--fs-xs);color:var(--ink-soft);margin-bottom:6px}
+.cmt .who b{color:var(--main);font-size:var(--fs-sm)}
+.avatar{width:26px;height:26px;border-radius:50%;background:var(--main-2);color:#f0b429;display:grid;place-items:center;font-size:var(--fs-xs);font-weight:800;flex:none}
+.cmt p{font-size:var(--fs-sm);margin:0;color:#2b3138}
+.cmt .ref{display:inline-block;font-size:var(--fs-xs);color:var(--accent);border-bottom:1px dashed #d9a99b;margin-top:6px}
+
+/* 资讯 */
+.news-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.news{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--main-2);border-radius:var(--r-m);padding:13px 16px}
+.news h3{font-size:.97rem;color:var(--main);margin-bottom:4px}
+.news p{font-size:var(--fs-sm);color:var(--ink-soft);margin:0}
+.news .when{font-size:var(--fs-xs);color:var(--accent);font-weight:700;letter-spacing:.05em;display:block;margin-bottom:4px}
+
+/* 推荐标签 */
+.recommend{display:flex;flex-wrap:wrap;gap:9px}
+.recommend a{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:var(--fs-sm);color:var(--main-2)}
+.recommend a:hover{border-color:var(--gold);background:var(--gold-soft);color:var(--main)}
+.recommend a small{color:#9a9284;font-size:var(--fs-xs);margin-left:4px}
+
+/* 榜单 */
+.rank{list-style:none;padding:0;margin:0;counter-reset:rank;display:grid;gap:8px}
+.rank li{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:10px 14px}
+.rank li::before{counter-increment:rank;content:counter(rank);font-weight:800;color:#b3a894;font-variant-numeric:tabular-nums;text-align:center}
+.rank li:nth-child(1)::before,.rank li:nth-child(2)::before,.rank li:nth-child(3)::before{color:var(--accent)}
+.rank .nm{font-size:.95rem;color:var(--main);font-weight:600}
+.rank .why{font-size:var(--fs-xs);color:var(--ink-soft);margin-top:1px}
+.rank .val{font-size:var(--fs-xs);color:var(--main-2);background:#efe9dc;border-radius:999px;padding:2px 10px;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* 时间线 */
+.timeline{list-style:none;padding:0;margin:0;border-left:2px solid var(--line);margin-left:6px}
+.timeline li{position:relative;padding:0 0 16px 20px}
+.timeline li:last-child{padding-bottom:0}
+.timeline li::before{content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--gold)}
+.timeline time{font-size:var(--fs-xs);color:var(--accent);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:2px}
+.timeline p{font-size:var(--fs-sm);color:#2b3138;margin:0}
+.timeline b{color:var(--main)}
+
+/* 创造者证言 */
+.quote-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.quote{background:var(--main);color:#eae4d8;border-radius:var(--r-m);padding:16px;box-shadow:var(--shadow-2);position:relative}
+.quote::before{content:"“";position:absolute;top:4px;left:10px;font-size:2.4rem;color:#f0b429;opacity:.55;line-height:1}
+.quote p{font-size:var(--fs-sm);margin:6px 0 10px;padding-left:16px}
+.quote .who{font-size:var(--fs-xs);color:#b8b1a4;padding-left:16px}
+.quote .who b{color:#fff}
+
+/* 页脚 */
+.sitefoot{background:#12161b;color:#cbc5b8;padding:var(--sp-5) 0 var(--sp-4);margin-top:var(--sp-4)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:26px}
+.sitefoot h3{font-size:var(--fs-sm);color:#fff;margin-bottom:10px;letter-spacing:.06em}
+.sitefoot p{font-size:var(--fs-sm);color:#a7a094;margin:0 0 10px}
+.sitefoot .brand{color:#fff}
+.footlinks{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.footlinks a{color:#a7a094;font-size:var(--fs-sm)}
+.footlinks a:hover{color:var(--gold)}
+.foot-rule{border-top:1px solid #2a3138;margin:26px 0 14px}
+.foot-bottom{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:var(--fs-xs);color:#7d7769}
+.foot-bottom span{letter-spacing:.03em}
+
+/* 回到顶部 */
+#toTop{
+  position:fixed;right:16px;bottom:18px;z-index:70;
+  width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+  background:var(--paper);color:var(--main);box-shadow:var(--shadow-2);
+  display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .16s ease;
+}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{transform:translateY(-2px)}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1024px){
+  .layout{grid-template-columns:minmax(0,1fr) 270px;gap:26px}
+  .pick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .catgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hero .wrap{grid-template-columns:1fr;gap:22px}
+  .hero-art{justify-self:start;max-width:360px}
+}
+@media (max-width:860px){
+  html{scroll-padding-top:70px}
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;order:2}
+  .layout-main{order:1}
+  .news-grid{grid-template-columns:1fr}
+  .quote-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .menubtn{display:inline-flex}
+  .nav{
+    display:none;order:10;flex-basis:100%;flex-direction:column;gap:0;
+    border-top:1px solid var(--line);margin:4px 0 8px;padding-top:8px;
+  }
+  .nav.open{display:flex}
+  .nav a{padding:10px 8px;border-bottom:1px dashed var(--line);border-radius:0}
+  .headtools{order:9}
+  .searchbox input{width:150px}
+}
+@media (max-width:640px){
+  .pick-grid,.overview-grid,.catgrid{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .hero-stats b{font-size:1.1rem}
+  .slimlist li{grid-template-columns:1fr;gap:2px}
+  .slimlist time{order:-1}
+  .headrow{gap:10px}
+  .searchbox{order:8;flex-basis:100%}
+  .searchbox input{width:100%}
+  .quote-grid{gap:10px}
+  .rank li{grid-template-columns:28px 1fr;row-gap:4px}
+  .rank .val{grid-column:2;justify-self:start}
+  .deep{padding:16px}
+  .foot-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .card:hover,.cat:hover,.btn:hover,#toTop:hover{transform:none}
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<!-- 吸顶公告条 + 页头 -->
+<div class="stickytop" id="stickytop">
+  <div class="notice" role="region" aria-label="更新公告">
+    <span class="dot" aria-hidden="true"></span>
+    <b>黑料吃瓜github51</b>
+    <span>11 月 7 日快照：仓库新增 18 条索引、归档 4 条重复记录，<a href="/#updates">看更新明细</a></span>
+  </div>
+  <header class="sitehead">
+    <div class="wrap headrow">
+      <a class="brand" href="/#top" aria-label="黑料吃瓜github51 首页">
+        <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <rect width="64" height="64" rx="14" fill="#161b22"/>
+          <path d="M15 42l11-16 9 10 13-19" fill="none" stroke="#f0b429" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="48" cy="17" r="4.5" fill="#c8472f"/>
+        </svg>
+        <span>黑料吃瓜github51<small>条目索引 · 维护观察</small></span>
+      </a>
+      <button class="btn ghost menubtn" id="menuBtn" aria-expanded="false" aria-controls="mainNav" type="button">菜单</button>
+      <nav class="nav" id="mainNav" aria-label="主题导航">
+        <a href="/#overview">领域概览</a>
+        <a href="/#picks">精选条目</a>
+        <a href="/#updates">最新更新</a>
+        <a href="/#cats">分类频道</a>
+        <a href="/#deep">深度解析</a>
+        <a href="/#guide">体验指南</a>
+        <a href="/#faq">常见问题</a>
+        <a href="/#rank">维护榜</a>
+      </nav>
+      <div class="headtools">
+        <div class="searchbox">
+          <svg class="mag" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+          <input type="search" id="siteSearch" placeholder="搜索条目 / 频道" aria-label="站内搜索条目或频道" autocomplete="off">
+          <div id="searchResult" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<main id="top">
+
+  <!-- 首屏 -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="wrap">
+      <div>
+        <span class="kicker">仓库索引 · 11 月观察</span>
+        <h1 id="heroTitle">黑料吃瓜github51</h1>
+        <p class="lede">一份围绕开源仓库 <strong>heilaio-github51</strong> 的条目观察页：把 9 个频道、210 余条索引的更新节奏、命名规则与核验方式摊开来看。截至 2026-11-07 的仓库快照共 <strong>218 条</strong>有效记录，其中 37 条标注了原文出处，62 条附带时间戳。</p>
+        <div class="hero-actions">
+          <a class="btn gold" href="/#picks">浏览精选条目</a>
+          <a class="btn line" href="/#guide">先看核验方法</a>
+        </div>
+        <div class="hero-stats" aria-label="仓库规模数字">
+          <div><b>9</b><span>频道分类</span></div>
+          <div><b>218</b><span>有效索引</span></div>
+          <div><b>11-07</b><span>最近快照</span></div>
+        </div>
+      </div>
+      <figure class="hero-art" aria-label="仓库索引结构示意图">
+        <svg viewBox="0 0 420 386" role="img" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f0b429" stop-opacity=".95"/>
+              <stop offset="1" stop-color="#c8472f" stop-opacity=".9"/>
+            </linearGradient>
+          </defs>
+          <rect x="18" y="20" width="384" height="346" rx="18" fill="none" stroke="#3b434d" stroke-width="2"/>
+          <path d="M50 78h96M50 96h60" stroke="#5a626d" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="356" cy="82" r="9" fill="#f0b429"/>
+          <circle cx="330" cy="82" r="9" fill="#3b434d"/>
+          <rect x="50" y="122" width="150" height="64" rx="10" fill="#222a33" stroke="#3b434d"/>
+          <path d="M66 144h78M66 162h50" stroke="#6d7681" stroke-width="6" stroke-linecap="round"/>
+          <rect x="218" y="122" width="150" height="64" rx="10" fill="#222a33" stroke="#3b434d"/>
+          <path d="M234 144h78M234 162h44" stroke="#6d7681" stroke-width="6" stroke-linecap="round"/>
+          <rect x="50" y="200" width="318" height="70" rx="10" fill="url(#g1)" opacity=".92"/>
+          <path d="M70 226h120M70 246h80" stroke="#1a1206" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+          <circle cx="336" cy="236" r="14" fill="#1a1206" opacity=".4"/>
+          <path d="M50 300h96M50 318h150M50 336h64" stroke="#4b545f" stroke-width="6" stroke-linecap="round"/>
+          <path d="M286 296l14 16 20-26" stroke="#f0b429" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <figcaption>结构示意：九月频道层 → 索引条目层 → 核验标记</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="wrap section" style="padding-top:var(--sp-4)">
+    <div class="layout">
+
+      <!-- 主内容 -->
+      <div class="layout-main">
+
+        <!-- 领域概览 -->
+        <section class="section" id="overview" style="padding-top:0" aria-labelledby="overviewH">
+          <div class="sec-head">
+            <span class="idx">01</span>
+            <h2 id="overviewH">领域概览：这类仓库在整理什么</h2>
+          </div>
+          <p style="font-size:var(--fs-sm);color:var(--ink-soft);max-width:56em">heilaio-github51 把散落在讨论区、镜像站与个人存档里的条目收进一个仓库，按频道分目录存放 Markdown 文件，每个文件头部写有来源、记录时间与状态标记。它更接近索引目录，判断依据是条目是否可回溯到原始出处，而不是内容是否好看。</p>
+          <div class="overview-grid">
+            <div class="ov">
+              <span class="num">结构 A</span>
+              <h3>频道目录制</h3>
+              <p>9 个一级目录，名称对应讨论区常见搜索词，如「平台回应」「账号变动」。目录下按 yyyy-mm 再分层。</p>
+            </div>
+            <div class="ov">
+              <span class="num">结构 B</span>
+              <h3>条目头部字段</h3>
+              <p>固定 5 个字段：标题、出处、记录时间、状态（原文 / 转述 / 待核）、维护人批注。</p>
+            </div>
+            <div class="ov">
+              <span class="num">结构 C</span>
+              <h3>快照与差异</h3>
+              <p>每周五生成一次快照文件，记录新增、修订、归档三类变动，供比对前后版本。</p>
+            </div>
+            <div class="ov">
+              <span class="num">结构 D</span>
+              <h3>标签索引</h3>
+              <p>用 41 个标签做交叉检索，标签不做层级，靠组合缩小范围，如「截图 + 已删」。</p>
+            </div>
+            <div class="ov">
+              <span class="num">结构 E</span>
+              <h3>来源分级</h3>
+              <p>原文截图、平台公告、第三方转述分三级，级别写在条目尾部，影响检索排序。</p>
+            </div>
+            <div class="ov">
+              <span class="num">结构 F</span>
+              <h3>维护日志</h3>
+              <p>仓库根目录的 LOG.md 记录每次归档原因，10 月共 46 条，最长一条 118 字。</p>
+            </div>
+          </div>
+          <div class="note-strip">维护方在 10 月 29 日的 README 修订里写了句提醒：条目只做索引，不替代原始判决或平台公告，引用时请回到出处核对。</div>
+        </section>
+
+        <!-- 精选内容推荐 -->
+        <section class="section" id="picks" aria-labelledby="picksH">
+          <div class="sec-head">
+            <span class="idx">02</span>
+            <h2 id="picksH">精选内容推荐：本周值得先看的六条</h2>
+            <p>挑选标准是出处完整、时间戳清楚、批注里有可比对的细节，优先给刚接触仓库的人。</p>
+          </div>
+          <div class="pick-grid">
+            <article class="card">
+              <img src="https://picsum.photos/seed/heiliao-pick-01/640/420" width="640" height="420" loading="lazy" alt="白色桌面上摊开的纸质记录与马克杯">
+              <div class="card-body">
+                <h3>平台回应的三个版本对照</h3>
+                <p>同一公告在 10 月 12 日、10 月 19 日、11 月 2 日改过措辞，仓库把三版并列存档。</p>
+                <div class="meta"><span class="tag">原文对照</span><span>11-02 修订</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img src="https://picsum.photos/seed/heiliao-pick-02/640/420" width="640" height="420" loading="lazy" alt="笔记本屏幕上的表格与便签">
+              <div class="card-body">
+                <h3>账号变动记录的时间戳表</h3>
+                <p>37 条变更按分钟记录，最早一条 09-21 03:14，最晚一条 11-05 22:47。</p>
+                <div class="meta"><span class="tag green">可回溯</span><span>11-05 更新</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img src="https://picsum.photos/seed/heiliao-pick-03/640/420" width="640" height="420" loading="lazy" alt="文件夹归档柜与索引标签">
+              <div class="card-body">
+                <h3>「已删」标签的判定规则</h3>
+                <p>截图打不开与主动删除被分开处理，前者进待核目录，后者才算归档理由成立。</p>
+                <div class="meta"><span class="tag red">规则讨论</span><span>10-29 归档</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img src="https://picsum.photos/seed/heiliao-pick-04/640/420" width="640" height="420" loading="lazy" alt="桌面上的多色荧光标记便签">
+              <div class="card-body">
+                <h3>跨平台转载链的追踪方法</h3>
+                <p>从贴吧一条截图追到三个镜像站，仓库记录每一跳的 URL 与抓取时间。</p>
+                <div class="meta"><span class="tag">方法</span><span>10-24 更新</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img src="https://picsum.photos/seed/heiliao-pick-05/640/420" width="640" height="420" loading="lazy" alt="打印出来的条目清单与红笔批注">
+              <div class="card-body">
+                <h3>十月归档的 46 条原因分布</h3>
+                <p>重复 21 条、出处失效 14 条、信息冲突 8 条、其余 3 条为格式整理。</p>
+                <div class="meta"><span class="tag green">统计</span><span>11-01 发布</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img src="https://picsum.photos/seed/heiliao-pick-06/640/420" width="640" height="420" loading="lazy" alt="打开的笔记本电脑显示文件目录">
+              <div class="card-body">
+                <h3>新手读索引的五个易错点</h3>
+                <p>把「转述」当原文、忽略修订时间、只看标题不看状态字段，是最常见的三类误读。</p>
+                <div class="meta"><span class="tag">入门</span><span>10-18 撰写</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 最新更新 -->
+        <section class="section" id="updates" aria-labelledby="updatesH">
+          <div class="sec-head">
+            <span class="idx">03</span>
+            <h2 id="updatesH">最新更新：11 月 6 日至 7 日抓取记录</h2>
+          </div>
+          <ul class="slimlist">
+            <li><time datetime="2026-11-07">11-07</time><span class="t">新增「平台回应」频道 3 条，其中 2 条附原文链接</span><span class="s">维护人：@kettle</span></li>
+            <li><time datetime="2026-11-07">11-07</time><span class="t">「账号变动」第 19 条补记 11-03 的二次截图，状态由待核改为原文</span><span class="s">维护人：@lin_09</span></li>
+            <li><time datetime="2026-11-06">11-06</time><span class="t">归档重复条目 4 条，两两合并，LOG 第 118 号条目记录合并理由</span><span class="s">维护人：@kettle</span></li>
+            <li><time datetime="2026-11-06">11-06</time><span class="t">标签索引新增「二次截图」，与「已删」「待核」组合可筛出 7 条</span><span class="s">维护人：@mori</span></li>
+            <li><time datetime="2026-11-05">11-05</time><span class="t">快照 v2.7 发布，含 218 条有效索引与 11 条搁置记录</span><span class="s">整包大小 3.4 MB</span></li>
+          </ul>
+        </section>
+
+        <!-- 分类入口 -->
+        <section class="section" id="cats" aria-labelledby="catsH">
+          <div class="sec-head">
+            <span class="idx">04</span>
+            <h2 id="catsH">分类入口：9 个频道与常见检索词</h2>
+            <p>频道名取自讨论区实际使用的说法，括号里是仓库目录名。</p>
+          </div>
+          <div class="catgrid">
+            <a class="cat" href="/#picks"><b>平台回应</b><span>官方公告与修订对照</span><em>41 条</em></a>
+            <a class="cat" href="/#updates"><b>账号变动</b><span>改名、注销、权限调整</span><em>37 条</em></a>
+            <a class="cat" href="/#deep"><b>截图存证</b><span>原始图、口径、截取时间</span><em>33 条</em></a>
+            <a class="cat" href="/#news"><b>转载追踪</b><span>跨站链路与镜像记录</span><em>26 条</em></a>
+            <a class="cat" href="/#rank"><b>争议归档</b><span>判断分歧与撤回记录</span><em>22 条</em></a>
+            <a class="cat" href="/#guide"><b>规则变更</b><span>平台条款前后版本</span><em>19 条</em></a>
+            <a class="cat" href="/#comments"><b>用户反馈</b><span>纠错与补充线索</span><em>16 条</em></a>
+            <a class="cat" href="/#faq"><b>待核清单</b><span>出处未确认的条目</span><em>11 条</em></a>
+            <a class="cat" href="/#timeline"><b>长期观察</b><span>超过 30 天的纵向记录</span><em>13 条</em></a>
+          </div>
+        </section>
+
+        <!-- 深度解析：唯一主体阅读区 -->
+        <section class="section" id="deep" aria-labelledby="deepH">
+          <article class="deep">
+            <span class="eyebrow">深度解析</span>
+            <h2 id="deepH">索引仓库的可靠度，取决于它敢不敢标「待核」</h2>
+            <p class="byline">基于 heilaio-github51 2026-10-08 至 2026-11-07 的五次快照比对</p>
+
+            <p>一个可核对的判断是：<b>这个仓库的价值不在条目数量，而在它把「待核」状态保留在公开目录里。</b>11-05 快照中，218 条有效索引里有 11 条明确标为待核，占 5.0%；如果按最常见的做法把这些条目直接删掉，仓库看起来会更整洁，但可核验性反而下降。</p>
+
+            <h3>五周快照的变动结构</h3>
+            <p>把 10-10、10-17、10-24、10-31、11-07 五次快照放在一起，条目总数的变化并非单调上升：</p>
+            <table class="compare">
+              <caption style="caption-side:top;text-align:left;font-size:var(--fs-xs);color:#8a8274;padding-bottom:6px">快照日期 / 有效条目 / 待核条目 / 本周归档</caption>
+              <thead><tr><th>快照日期</th><th>有效条目</th><th>待核条目</th><th>本周归档</th></tr></thead>
+              <tbody>
+                <tr><td>2026-10-10</td><td>189</td><td>6</td><td>9</td></tr>
+                <tr><td>2026-10-17</td><td>201</td><td>8</td><td>7</td></tr>
+                <tr><td>2026-10-24</td><td>207</td><td>9</td><td>12</td></tr>
+                <tr><td>2026-10-31</td><td>214</td><td>12</td><td>10</td></tr>
+                <tr><td>2026-11-07</td><td>218</td><td>11</td><td>8</td></tr>
+              </tbody>
+            </table>
+            <p>10-31 到 11-07 这一周，有效条目只增加 4 条，待核条目却从 12 条降到 11 条。拆开看，是 3 条待核转成原文、1 条被并入重复条目、1 条新进待核，净减 1。数量变化小，但体现的是审核动作，不是采集动作。</p>
+
+            <div class="callout"><b>可反驳点：</b>如果只看条目总数，这段增长几乎没有信息量；把待核转正数单独列出，才能看到 11 月第一周的维护重心从「扩量」切到了「定级」。</div>
+
+            <h3>平台回应文件夹的措辞差异</h3>
+            <p>「平台回应」频道下，编号 7、编号 12、编号 16 三条记录指向同一份公告的三个版本。10-12 版写「已处理」，10-19 版改为「已核实并处理」，11-02 版补了一句「相关账号限制已于 10-20 生效」。仓库没有做摘要合并，而是保留三份原文并标注差异行。</p>
+            <ul>
+              <li>10-12 版：未提生效时间，仅 12 个字的主谓结构。</li>
+              <li>10-19 版：加入「核实」二字，未说明核实依据。</li>
+              <li>11-02 版：首次出现具体日期，与 10-20 的账号变动记录可以对齐。</li>
+            </ul>
+            <p>这类差异单看任何一版都读不出来。三版并列之后，10-20 这个时间点从「推测」变成「可对照」，因为账号变动频道 10-20 那天记录了 2 条权限调整。</p>
+
+            <h3>判断拆成可核对的三步</h3>
+            <div class="factrow"><b>第一步</b><span>看条目的「状态」字段：原文、转述、待核三者选一，没有第四种。</span></div>
+            <div class="factrow"><b>第二步</b><span>看「记录时间」与出处页面的发布时间是否同一天，相差超过 72 小时的多半是二手。</span></div>
+            <div class="factrow"><b>第三步</b><span>对照同频道相邻编号，确认前一条是否已引用同一出处，重复引用会被 LOG 标注。</span></div>
+            <p>这套顺序来自 10-18 的入门条目，作者 @mori 在批注里写道：先判状态，再看时间，最后查重复，顺序反了容易把二手当一手。</p>
+
+            <h3>争议内容中事实与推测的分界</h3>
+            <p>仓库第 19 条「账号变动」曾引发讨论。可确认的事实是：10-20 与 10-21 各有一次权限调整记录，两次之间相隔 1 天 4 小时。维护方的回应是「两次调整属于同一次处理流程的两步」，理由写在 LOG 第 96 号。转述层面，有讨论区帖子说这两次之间「有第三方介入」，但仓库没有收录该说法，只在待核清单里保留标题。推测部分则被明确隔离在批注区，用斜体标注，不参与检索排序。</p>
+
+            <h3>哪些记录只适合一次出现</h3>
+            <p>11-03 的二次截图补齐、10-29 的规则条目改写、10-24 的跨平台链路追踪，这三件事在仓库里各出现一次，没有被写进榜单、推荐或 FAQ。理由很直接：它们属于过程记录，重复叙述只会增加解释成本。仓库对这类内容的处理方式是放进 LOG 与对应条目的批注，不另起条目。</p>
+            <p>读索引的人如果只扫标题，会错过这些过程信息。换句话说，判断一个镜像仓库是否可靠，先看它的 LOG 写了多长，再看它敢不敢让 5% 的条目停在「待核」。</p>
+          </article>
+        </section>
+
+        <!-- 体验指南 -->
+        <section class="section" id="guide" aria-labelledby="guideH">
+          <div class="sec-head">
+            <span class="idx">06</span>
+            <h2 id="guideH">体验指南：从克隆到定位一条记录</h2>
+          </div>
+          <ol class="steps">
+            <li><b>先读 README 的版本行</b><span>顶部会写当前快照编号，如 v2.7；与 LOG 最新日期能否对上，是第一个检查点。</span></li>
+            <li><b>用频道目录缩小范围</b><span>9 个目录里挑 1 个，不要一上来全库搜索，关键词命中的噪声会翻倍。</span></li>
+            <li><b>打开条目头部五个字段</b><span>重点看「状态」和「记录时间」，两栏不一致时以出处页面为准。</span></li>
+            <li><b>交叉查标签索引</b><span>组合「截图 + 待核」可筛出 7 条，组合「平台回应 + 修订」可得 3 条版本对照。</span></li>
+            <li><b>把结论写回批注区</b><span>反馈通过 Pull Request 提交，维护方通常 48 小时内回复，10 月共合并 22 条外部修订。</span></li>
+          </ol>
+          <div class="note-strip" style="margin-top:14px">平板宽度下仓库目录会折行显示，建议用「频道名 + 日期」两段式搜索，而不是整句粘贴。</div>
+        </section>
+
+        <!-- 榜单 -->
+        <section class="section" id="rank" aria-labelledby="rankH">
+          <div class="sec-head">
+            <span class="idx">07</span>
+            <h2 id="rankH">维护活跃榜：按修订次数排序的频道</h2>
+            <p>统计区间 2026-10-08 至 2026-11-07，修订包含新增、改状态、合并三类动作。</p>
+          </div>
+          <ol class="rank">
+            <li><div><div class="nm">平台回应</div><div class="why">公告改版带动的连锁修订</div></div><span class="val">34 次</span></li>
+            <li><div><div class="nm">账号变动</div><div class="why">二次截图补齐最多</div></div><span class="val">29 次</span></li>
+            <li><div><div class="nm">截图存证</div><div class="why">来源失效替换频繁</div></div><span class="val">23 次</span></li>
+            <li><div><div class="nm">争议归档</div><div class="why">判断分歧引发的合并</div></div><span class="val">17 次</span></li>
+            <li><div><div class="nm">转载追踪</div><div class="why">镜像站地址变动</div></div><span class="val">14 次</span></li>
+            <li><div><div class="nm">规则变更</div><div class="why">条款版本对照新增</div></div><span class="val">11 次</span></li>
+          </ol>
+        </section>
+
+        <!-- 时间线 -->
+        <section class="section" id="timeline" aria-labelledby="timelineH">
+          <div class="sec-head">
+            <span class="idx">08</span>
+            <h2 id="timelineH">时间线：十月以来与索引相关的五个节点</h2>
+          </div>
+          <ol class="timeline">
+            <li><time datetime="2026-10-10">10-10</time><p>快照 v2.4 发布，首次引入「待核」字段，当时共 6 条。</p></li>
+            <li><time datetime="2026-10-18">10-18</time><p><b>入门条目上线</b>，作者 @mori，正文 940 字，列了三个易错点。</p></li>
+            <li><time datetime="2026-10-24">10-24</time><p>跨平台链路追踪方法补入「转载追踪」频道，附三个镜像站地址与抓取时间。</p></li>
+            <li><time datetime="2026-10-29">10-29</time><p>README 修订，新增一句关于「条目不替代原始公告」的提醒。</p></li>
+            <li><time datetime="2026-11-05">11-05</time><p>快照 v2.7 发布，有效条目 218 条，待核 11 条，整包 3.4 MB。</p></li>
+          </ol>
+        </section>
+
+        <!-- 相关资讯 -->
+        <section class="section" id="news" aria-labelledby="newsH">
+          <div class="sec-head">
+            <span class="idx">09</span>
+            <h2 id="newsH">相关资讯：仓库之外的五条动向</h2>
+          </div>
+          <div class="news-grid">
+            <article class="news">
+              <span class="when">11-07</span>
+              <h3>镜像站 heiliao-mirror 调整抓取频率</h3>
+              <p>从每日一次改为每 12 小时一次，仓库转载追踪频道的 26 条记录里，有 9 条引用了该站地址。</p>
+            </article>
+            <article class="news">
+              <span class="when">11-06</span>
+              <h3>GitHub 上同类索引仓库增至 14 个</h3>
+              <p>近 30 天内新建 3 个，其中 2 个沿用了本仓库的头部字段格式，但未标注来源。</p>
+            </article>
+            <article class="news">
+              <span class="when">11-04</span>
+              <h3>讨论区对「二次截图」标签的用法有分歧</h3>
+              <p>一方认为应并入「原文」，另一方主张保留独立标签；仓库暂按后者执行。</p>
+            </article>
+            <article class="news">
+              <span class="when">11-02</span>
+              <h3>平台回应的第三版公告改动生效时间</h3>
+              <p>新增「10-20 生效」一句，与账号变动频道的两条记录时间吻合。</p>
+            </article>
+            <article class="news">
+              <span class="when">10-31</span>
+              <h3>维护方合并 12 条重复条目</h3>
+              <p>合并依据写进 LOG 第 108 至 115 号，其中 4 条附了去重前后的对照表。</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq" aria-labelledby="faqH">
+          <div class="sec-head">
+            <span class="idx">10</span>
+            <h2 id="faqH">常见问题</h2>
+          </div>
+          <div class="faq">
+            <details>
+              <summary>「黑料吃瓜github51」仓库里的「待核」是什么意思？</summary>
+              <div class="a"><p>「待核」是条目状态字段的三个取值之一，表示出处链接打不开、截图缺少时间戳、或原文已被平台删除。它不等于内容为假，也不等于已被判定。11-05 快照里共有 11 条处于该状态，集中列在「待核清单」频道。</p></div>
+            </details>
+            <details>
+              <summary>截图存证和账号变动两个频道的记录会重复吗？</summary>
+              <div class="a"><p>会交叉引用，但不会完整重复。账号变动频道以时间戳为主线，截图存证频道以图片来源为主线。同一条事件若两处出现，编号会互标，例如账号变动第 19 条引用截图存证第 8 条。10-31 的合并动作处理了 12 条这类重复。</p></div>
+            </details>
+            <details>
+              <summary>平台回应频道的旧版本为什么还留着？</summary>
+              <div class="a"><p>为了对照措辞变化。同一份公告的三个版本分别记录在编号 7、12、16，10-12 版写「已处理」，10-19 版改为「已核实并处理」，11-02 版补了生效日期。删掉旧版就无法看出修改发生在哪一天。</p></div>
+            </details>
+            <details>
+              <summary>怎样确认一条记录不是二手转述？</summary>
+              <div class="a"><p>看状态字段是否为「原文」，再比对记录时间与出处发布时间，差距超过 72 小时的要谨慎。10-18 的入门条目把这套顺序写成三步，维护方在 LOG 里也用了同样的检查口径。</p></div>
+            </details>
+            <details>
+              <summary>普通读者能给仓库补充线索吗？</summary>
+              <div class="a"><p>可以。补线索走 Pull Request，格式要求与现有条目头部一致：标题、出处、记录时间、状态、批注。10 月共有 22 条外部提交被合并，被退回的多是因为缺出处链接。</p></div>
+            </details>
+            <details>
+              <summary>快照文件和实时目录有什么区别？</summary>
+              <div class="a"><p>快照是每周五生成的静态打包，用于比对前后版本；实时目录随时可能被修订。11-05 的 v2.7 快照整包 3.4 MB，含 218 条有效索引和 11 条搁置记录。引用时注明快照编号比注明日期更稳妥。</p></div>
+            </details>
+          </div>
+        </section>
+
+        <!-- 用户评论 -->
+        <section class="section" id="comments" aria-labelledby="commentsH">
+          <div class="sec-head">
+            <span class="idx">11</span>
+            <h2 id="commentsH">用户评论：纠错、吐槽与补充</h2>
+            <p>以下为示例评论，展示仓库反馈区的常见语气。</p>
+          </div>
+          <div class="comments">
+            <div class="cmt">
+              <div class="who"><span class="avatar">林</span><b>林间有雾</b><span>11-07 14:20</span></div>
+              <p>账号变动第 19 条那个时间戳，10-20 04:17 跟我自己截的图对不上，我这边是 04:23。建议维护方再核一次原始记录。<span class="ref">指向：账号变动 #19</span></p>
+            </div>
+            <div class="cmt">
+              <div class="who"><span class="avatar">M</span><b>mori_k</b><span>11-07 09:02</span></div>
+              <p>快照 v2.7 的标签索引好用，「二次截图」单独拉出来之后，找版本差异快了一半。之前要在三个目录里翻。</p>
+            </div>
+            <div class="cmt">
+              <div class="who"><span class="avatar">枣</span><b>枣泥酥不加糖</b><span>11-06 22:41</span></div>
+              <p>平台回应频道编号 16 那句「10-20 生效」其实公告里写的是「10-20 起陆续生效」，少了两个字，意思差挺多。<span class="ref">指向：平台回应 #16</span></p>
+            </div>
+            <div class="cmt">
+              <div class="who"><span class="avatar">K</span><b>kettle_</b><span>11-06 18:15</span></div>
+              <p>LOG 第 118 号合并理由写得挺细，附了去重前后的对照表。比某些只写「整理」两个字的仓库强。</p>
+            </div>
+            <div class="cmt">
+              <div class="who"><span class="avatar">灰</span><b>灰盒观察</b><span>11-05 20:33</span></div>
+              <p>说实话，11-05 快照里 218 条看着多，真正有原文链接的只有 37 条。剩下 181 条基本靠转述，参考价值有限。<span class="ref">指向：快照 v2.7 统计</span></p>
+            </div>
+            <div class="cmt">
+              <div class="who"><span class="avatar">路</span><b>路过打酱油的</b><span>11-04 11:07</span></div>
+              <p>争议归档频道第 4 条，我觉得批注里那段推测不该留着，看着像结论。转述就写转述，别混在一起。</p>
+            </div>
+            <div class="cmt">
+              <div class="who"><span class="avatar">D</span><b>dune_reader</b><span>11-03 16:58</span></div>
+              <p>跨平台链路追踪那篇有用，三个镜像站地址我挨个试了，第二个已经 404，建议更新一下。<span class="ref">指向：转载追踪 #11</span></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 相关推荐 -->
+        <section class="section" id="related" aria-labelledby="relatedH">
+          <div class="sec-head">
+            <span class="idx">12</span>
+            <h2 id="relatedH">相关推荐</h2>
+          </div>
+          <div class="recommend">
+            <a href="/#picks">平台回应版本对照 <small>41 条</small></a>
+            <a href="/#updates">账号变动时间戳表 <small>37 条</small></a>
+            <a href="/#deep">截图存证口径拆解 <small>深度</small></a>
+            <a href="/#guide">待核条目核验三步法 <small>方法</small></a>
+            <a href="/#news">镜像站抓取频率调整 <small>资讯</small></a>
+            <a href="/#timeline">十月以来五个节点 <small>时间线</small></a>
+            <a href="/#rank">频道修订次数榜 <small>榜单</small></a>
+            <a href="/#faq">快照与实时目录差异 <small>问答</small></a>
+            <a href="/#comments">条目纠错反馈 <small>16 条</small></a>
+          </div>
+        </section>
+
+        <!-- 创造者证言 -->
+        <section class="section" id="voices" aria-labelledby="voicesH">
+          <div class="sec-head">
+            <span class="idx">13</span>
+            <h2 id="voicesH">维护者与读者证言</h2>
+          </div>
+          <div class="quote-grid">
+            <div class="quote">
+              <p>合并重复条目比新增条目费时间。10-31 那天 12 条，光对照来源就花了四个小时。</p>
+              <div class="who"><b>@kettle</b> · 条目维护 · 11-06</div>
+            </div>
+            <div class="quote">
+              <p>写入门条目的时候最怕把二手写成一手。所以那篇 940 字里，有一半在讲怎么核对时间戳。</p>
+              <div class="who"><b>@mori</b> · 方法条目作者 · 10-18</div>
+            </div>
+            <div class="quote">
+              <p>我主要看规则变更频道，条款改一个词，后面的处理流程就全不一样。快照能对比，省事。</p>
+              <div class="who"><b>@枣泥酥</b> · 读者 · 11-06</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- 侧栏 -->
+      <aside class="side" aria-label="频道导航与补充信息">
+        <nav class="side-card side-nav" id="sideNav" aria-label="频道快速导航">
+          <h3>频道导航</h3>
+          <a href="/#overview">领域概览</a>
+          <a href="/#picks">精选条目</a>
+          <a href="/#updates">最新更新</a>
+          <a href="/#cats">分类频道</a>
+          <a href="/#deep">深度解析</a>
+          <a href="/#guide">体验指南</a>
+          <a href="/#rank">维护活跃榜</a>
+          <a href="/#timeline">时间线</a>
+          <a href="/#news">相关资讯</a>
+          <a href="/#faq">常见问题</a>
+          <a href="/#comments">用户评论</a>
+          <a href="/#related">相关推荐</a>
+          <a href="/#voices">证言</a>
+        </nav>
+        <div class="side-card">
+          <h3>本周数字</h3>
+          <ul style="list-style:none;padding:0;margin:0;font-size:var(--fs-sm);color:var(--ink-soft)">
+            <li>有效索引 <strong style="color:var(--main)">218</strong> 条</li>
+            <li>附原文出处 <strong style="color:var(--main)">37</strong> 条</li>
+            <li>带时间戳 <strong style="color:var(--main)">62</strong> 条</li>
+            <li>待核清单 <strong style="color:var(--accent)">11</strong> 条</li>
+            <li>外部修订合并 <strong style="color:var(--main)">22</strong> 次</li>
+          </ul>
+        </div>
+        <div class="side-card">
+          <h3>检索提示</h3>
+          <p style="font-size:var(--fs-sm);color:var(--ink-soft);margin:0">频道名 + 日期两段式检索命中率最高，例如「平台回应 10-19」。整句粘贴容易把批注文字也带进来。</p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<!-- 页脚 -->
+<footer class="sitefoot" aria-label="页脚">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="/#top" style="color:#fff">
+          <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <rect width="64" height="64" rx="14" fill="#f0b429"/>
+            <path d="M15 42l11-16 9 10 13-19" fill="none" stroke="#161b22" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>黑料吃瓜github51</span>
+        </a>
+        <p style="margin-top:10px">把开源索引仓库的结构、状态字段与修订记录摆出来，供人逐条核对。</p>
+        <p style="font-size:var(--fs-xs);color:#7d7769">页面更新于 2026-11-07，对应正文快照 v2.7、LOG 第 118 号与 11-06 抓取记录。</p>
+      </div>
+      <div>
+        <h3>频道</h3>
+        <ul class="footlinks">
+          <li><a href="/#cats">平台回应</a></li>
+          <li><a href="/#cats">账号变动</a></li>
+          <li><a href="/#cats">截图存证</a></li>
+          <li><a href="/#cats">转载追踪</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>阅读</h3>
+        <ul class="footlinks">
+          <li><a href="/#picks">精选条目</a></li>
+          <li><a href="/#deep">深度解析</a></li>
+          <li><a href="/#guide">体验指南</a></li>
+          <li><a href="/#faq">常见问题</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>参考</h3>
+        <ul class="footlinks">
+          <li><a href="/#updates">最新更新</a></li>
+          <li><a href="/#rank">维护活跃榜</a></li>
+          <li><a href="/#timeline">时间线</a></li>
+          <li><a href="/#related">相关推荐</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>条目与评论为示例数据，用于演示索引结构，不构成事实认定。</span>
+      <span>© 2026 黑料吃瓜github51 · 保留所有权利</span>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" type="button" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  "use strict";
+
+  /* 移动端菜单 */
+  var menuBtn = document.getElementById('menuBtn');
+  var nav = document.getElementById('mainNav');
+  if(menuBtn && nav){
+    menuBtn.addEventListener('click', function(){
+      var open = nav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.addEventListener('click', function(e){
+      if(e.target.closest('a') && window.matchMedia('(max-width: 860px)').matches){
+        nav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+
+  /* 回到顶部 */
+  var toTop = document.getElementById('toTop');
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function(){
+      if(window.scrollY > 520){ toTop.classList.add('show'); }
+      else { toTop.classList.remove('show'); }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  toTop.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  /* 侧栏滚动高亮 */
+  var sideLinks = Array.prototype.slice.call(document.querySelectorAll('#sideNav a'));
+  var targets = sideLinks.map(function(a){
+    var id = a.getAttribute('href').replace('/#','');
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  if('IntersectionObserver' in window && targets.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        var id = en.target.id;
+        sideLinks.forEach(function(a){
+          var match = a.getAttribute('href') === '/#' + id;
+          a.classList.toggle('active', match);
+        });
+      });
+    }, {rootMargin:'-120px 0px -65% 0px', threshold:0});
+    targets.forEach(function(t){ io.observe(t); });
+  }
+
+  /* 本地搜索 */
+  var input = document.getElementById('siteSearch');
+  var out = document.getElementById('searchResult');
+  var blocks = Array.prototype.slice.call(
+    document.querySelectorAll('.layout-main section, .layout-main .deep')
+  );
+  var index = blocks.map(function(b){
+    var head = b.querySelector('h2, h1');
+    return {
+      el: b,
+      title: head ? head.textContent.trim() : '',
+      text: b.textContent.replace(/\s+/g,' ')
+    };
+  }).filter(function(o){ return o.title; });
+
+  var timer = null;
+  input.addEventListener('input', function(){
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      var q = input.value.trim().toLowerCase();
+      blocks.forEach(function(b){
+        var wasHidden = b.dataset.hideBySearch === '1';
+        if(wasHidden){ b.style.display=''; b.dataset.hideBySearch='0'; }
+        b.querySelectorAll('mark.hit').forEach(function(m){
+          var p = m.parentNode;
+          p.replaceChild(document.createTextNode(m.textContent), m);
+          p.normalize();
+        });
+      });
+      if(!q){ out.classList.remove('show'); out.textContent=''; return; }
+      var hits = index.filter(function(o){ return o.text.toLowerCase().indexOf(q) !== -1; });
+      index.forEach(function(o){
+        if(hits.indexOf(o) === -1){
+          o.el.style.display = 'none';
+          o.el.dataset.hideBySearch = '1';
+        }
+      });
+      if(hits.length === 0){
+        out.classList.add('show');
+        out.textContent = '没有找到「' + input.value.trim() + '」相关条目';
+      } else {
+        out.classList.add('show');
+        out.textContent = '命中 ' + hits.length + ' 个板块，已过滤其余内容';
+      }
+    }, 180);
+  });
+
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "黑料吃瓜github51",
+  "alternateName": "条目索引维护观察",
+  "inLanguage": "zh-CN",
+  "description": "围绕开源聚合索引仓库的条目标注、快照比对与核验方法展开的观察页面。"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "仓库里的「待核」是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "待核是条目状态字段的三个取值之一，表示出处链接打不开、截图缺少时间戳或原文已被平台删除。11-05 快照里共有 11 条处于该状态。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "截图存证和账号变动两个频道的记录会重复吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "会交叉引用但不会完整重复。账号变动以时间戳为主线，截图存证以图片来源为主线。同一条事件若两处出现，编号会互标。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "平台回应频道的旧版本为什么还留着？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "为了对照措辞变化。编号 7、12、16 三条对应同一公告的三个版本，删掉旧版就看不出修改发生在哪一天。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎样确认一条记录不是二手转述？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先看状态字段是否为原文，再比对记录时间与出处发布时间，差距超过 72 小时的要谨慎。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "普通读者能给仓库补充线索吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。补线索走 Pull Request，格式要求与现有条目头部一致，10 月共有 22 条外部提交被合并。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "快照文件和实时目录有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "快照是每周五生成的静态打包，用于比对前后版本；实时目录随时可能被修订。11-05 的 v2.7 快照整包 3.4 MB。"
+      }
+    }
+  ]
+}
+</script>
+</body>
+  </html>
