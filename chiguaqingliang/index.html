@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>吃瓜轻量版-精简娱乐资讯与事件时间线</title>
+<meta name="description" content="吃瓜轻量版提供精简娱乐资讯，聚合综艺录制、剧集定档、演唱会票务与艺人动态，用时间线和核对表梳理争议事件，辨别事实与推测，省流看重点。">
+<meta name="keywords" content="吃瓜轻量版">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23e0503c'/%3E%3Cpath d='M16 16L16 4A12 12 0 0 1 28 16Z' fill='%23f7e6c4'/%3E%3Ccircle cx='11' cy='11' r='1.6' fill='%23302a26'/%3E%3Ccircle cx='19' cy='20' r='1.6' fill='%23302a26'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#faf6ef;
+  --surface:#ffffff;
+  --surface-2:#f3ece0;
+  --ink:#2b2622;
+  --ink-soft:#5f574f;
+  --ink-faint:#8a7f74;
+  --brand:#d64a36;
+  --brand-deep:#a8321f;
+  --brand-soft:#fbe4dc;
+  --accent:#1f7a6a;
+  --accent-soft:#dcefe9;
+  --line:#e4d9c9;
+  --line-strong:#cbbba4;
+  --radius-s:6px;
+  --radius-m:12px;
+  --radius-l:20px;
+  --shadow-s:0 1px 2px rgba(43,38,34,.06),0 2px 8px rgba(43,38,34,.05);
+  --shadow-m:0 2px 6px rgba(43,38,34,.07),0 10px 24px rgba(43,38,34,.07);
+  --font-base:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --fs-h1:clamp(1.7rem,4.2vw,2.6rem);
+  --fs-h2:clamp(1.25rem,2.6vw,1.55rem);
+  --fs-h3:1.06rem;
+  --fs-body:1rem;
+  --fs-s:.86rem;
+  --fs-xs:.76rem;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;
+  --sticky-stack:86px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--font-base);font-size:var(--fs-body);line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--brand-deep);text-decoration:none;}
+a:hover{text-decoration:underline;}
+img{max-width:100%;display:block;}
+h1,h2,h3,h4{margin:0;line-height:1.34;font-weight:700;}
+p{margin:0 0 var(--space-3);}
+ul,ol{margin:0 0 var(--space-3);padding-left:1.25em;}
+li{margin-bottom:var(--space-1);}
+button{font-family:inherit;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px;}
+[id]{scroll-margin-top:calc(var(--sticky-stack) + 30px);}
+
+/* ---------- 吸顶公告条 + 页头 ---------- */
+.sticky-wrap{
+  position:sticky;top:0;z-index:50;
+  box-shadow:0 2px 10px rgba(43,38,34,.07);
+}
+.notice-bar{
+  background:var(--ink);color:#f6ede0;
+  font-size:var(--fs-s);line-height:1.5;
+  padding:7px var(--space-4);
+  display:flex;gap:var(--space-3);align-items:center;justify-content:center;
+  flex-wrap:wrap;text-align:center;
+}
+.notice-bar .brand-tag{
+  color:#ffd9a8;font-weight:700;letter-spacing:.03em;
+  border:1px solid rgba(255,217,168,.5);border-radius:3px;padding:0 6px;font-size:var(--fs-xs);
+}
+.notice-bar time{color:#c9bda9;}
+.site-header{
+  background:rgba(250,246,239,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  padding:var(--space-3) var(--space-4);
+}
+.header-inner{
+  max-width:1180px;margin:0 auto;
+  display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+.brand svg{width:38px;height:38px;flex:0 0 auto;}
+.brand-text{font-weight:800;font-size:1.16rem;letter-spacing:.02em;color:var(--ink);}
+.brand-text span{color:var(--brand);}
+.main-nav{display:flex;gap:2px;flex-wrap:wrap;flex:1 1 auto;justify-content:center;}
+.main-nav a{
+  color:var(--ink-soft);font-size:var(--fs-s);padding:6px 10px;border-radius:var(--radius-s);
+}
+.main-nav a:hover{background:var(--brand-soft);color:var(--brand-deep);text-decoration:none;}
+.header-tools{display:flex;gap:var(--space-2);align-items:center;}
+.search-box{position:relative;display:flex;align-items:center;}
+.search-box input{
+  border:1px solid var(--line-strong);background:var(--surface);
+  border-radius:999px;padding:7px 12px 7px 32px;font-size:var(--fs-s);
+  width:170px;color:var(--ink);font-family:inherit;
+}
+.search-box input:focus{outline:2px solid var(--accent);outline-offset:1px;width:200px;}
+.search-box .s-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink-faint);pointer-events:none;font-size:14px;}
+.search-feedback{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius-m);
+  box-shadow:var(--shadow-m);font-size:var(--fs-s);padding:10px 12px;display:none;min-width:230px;
+  z-index:60;color:var(--ink-soft);
+}
+.search-feedback.on{display:block;}
+.menu-btn{
+  display:none;border:1px solid var(--line-strong);background:var(--surface);
+  border-radius:var(--radius-s);padding:6px 12px;font-size:var(--fs-s);color:var(--ink);cursor:pointer;
+}
+.btn-entry{
+  background:var(--brand);color:#fff;border-radius:999px;
+  padding:7px 16px;font-size:var(--fs-s);font-weight:600;white-space:nowrap;
+}
+.btn-entry:hover{background:var(--brand-deep);color:#fff;text-decoration:none;}
+
+/* ---------- 首屏 ---------- */
+.hero{
+  max-width:1180px;margin:0 auto;padding:var(--space-7) var(--space-4) var(--space-6);
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);
+  gap:var(--space-6);align-items:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:var(--fs-xs);color:var(--brand-deep);font-weight:700;letter-spacing:.08em;
+  background:var(--brand-soft);border-radius:999px;padding:4px 12px;margin-bottom:var(--space-4);
+}
+.hero h1{font-size:var(--fs-h1);letter-spacing:.01em;margin-bottom:var(--space-4);}
+.hero h1 em{font-style:normal;color:var(--brand);}
+.hero-lead{color:var(--ink-soft);font-size:1.03rem;max-width:36em;margin-bottom:var(--space-5);}
+.hero-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;}
+.btn-primary{
+  background:var(--brand);color:#fff;padding:10px 22px;border-radius:999px;
+  font-weight:700;font-size:.95rem;box-shadow:var(--shadow-s);
+}
+.btn-primary:hover{background:var(--brand-deep);color:#fff;text-decoration:none;transform:translateY(-2px);}
+.btn-ghost{
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
+  padding:9px 20px;border-radius:999px;font-weight:600;font-size:.95rem;
+}
+.btn-ghost:hover{background:var(--surface-2);text-decoration:none;transform:translateY(-2px);}
+.hero-metrics{
+  display:flex;gap:var(--space-5);margin-top:var(--space-5);flex-wrap:wrap;
+  border-top:1px dashed var(--line-strong);padding-top:var(--space-4);
+}
+.metric b{display:block;font-size:1.4rem;color:var(--brand-deep);line-height:1.2;}
+.metric span{font-size:var(--fs-xs);color:var(--ink-faint);}
+.hero-art{position:relative;aspect-ratio:1/.92;min-height:280px;}
+.hero-art svg{width:100%;height:100%;display:block;}
+.hero-art .float-card{
+  position:absolute;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius-m);box-shadow:var(--shadow-m);
+  font-size:var(--fs-xs);padding:8px 12px;color:var(--ink-soft);max-width:190px;
+}
+.hero-art .fc-1{top:4%;right:0;}
+.hero-art .fc-2{bottom:10%;left:0;}
+.hero-art .fc-3{bottom:38%;right:2%;}
+.hero-art .fc-1 b,.hero-art .fc-2 b,.hero-art .fc-3 b{color:var(--brand-deep);display:block;font-size:var(--fs-s);}
+
+/* ---------- 主内容布局 ---------- */
+.layout{
+  max-width:1180px;margin:0 auto;padding:0 var(--space-4) var(--space-7);
+  display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:var(--space-6);
+  align-items:start;
+}
+.main-col{min-width:0;}
+.section{margin-bottom:var(--space-6);}
+.section-head{display:flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-4);}
+.section-head h2{font-size:var(--fs-h2);}
+.section-head .sub{font-size:var(--fs-s);color:var(--ink-faint);}
+.section-kicker{
+  font-size:var(--fs-xs);color:var(--brand-deep);font-weight:700;letter-spacing:.1em;
+  display:block;margin-bottom:4px;
+}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);box-shadow:var(--shadow-s);}
+.pad{padding:var(--space-4) var(--space-5);}
+
+/* 概览 */
+.overview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-3);}
+.overview-grid .card{padding:var(--space-4);display:flex;flex-direction:column;gap:6px;}
+.overview-grid h3{font-size:var(--fs-h3);}
+.overview-grid p{font-size:var(--fs-s);color:var(--ink-soft);margin:0;}
+.overview-grid .tagline{font-size:var(--fs-xs);color:var(--brand-deep);font-weight:600;}
+
+/* 精选双栏 */
+.feature-split{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--space-4);}
+.feature-lead{overflow:hidden;display:flex;flex-direction:column;}
+.feature-lead img{width:100%;height:200px;object-fit:cover;}
+.feature-lead .fl-body{padding:var(--space-4) var(--space-5);}
+.feature-lead h3{font-size:1.22rem;margin-bottom:var(--space-2);}
+.feature-lead p{font-size:var(--fs-s);color:var(--ink-soft);margin-bottom:var(--space-3);}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-item{display:flex;gap:var(--space-3);padding:var(--space-3) 0;border-bottom:1px dashed var(--line);}
+.mini-item:last-child{border-bottom:0;padding-bottom:0;}
+.mini-item:first-child{padding-top:0;}
+.mini-item img{width:84px;height:62px;object-fit:cover;border-radius:var(--radius-s);flex:0 0 auto;}
+.mini-item h4{font-size:.95rem;margin-bottom:2px;}
+.mini-item p{font-size:var(--fs-xs);color:var(--ink-faint);margin:0;}
+.mini-item time{font-size:var(--fs-xs);color:var(--accent);font-weight:600;}
+
+/* 最新更新时间线 */
+.timeline{list-style:none;padding:0;margin:0;position:relative;}
+.timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line-strong);}
+.timeline li{position:relative;padding-left:30px;margin-bottom:var(--space-4);}
+.timeline li::before{
+  content:"";position:absolute;left:1px;top:6px;width:14px;height:14px;
+  border-radius:50%;background:var(--brand-soft);border:3px solid var(--brand);
+}
+.timeline h4{font-size:.98rem;margin-bottom:2px;}
+.timeline .t-meta{font-size:var(--fs-xs);color:var(--ink-faint);margin-bottom:2px;}
+.timeline p{font-size:var(--fs-s);color:var(--ink-soft);margin:0;}
+
+/* 分类入口 -> 频道索引 */
+.channel-index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-2);}
+.channel-index a{
+  display:block;padding:10px 12px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius-s);font-size:var(--fs-s);color:var(--ink);text-align:center;
+}
+.channel-index a:hover{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-deep);text-decoration:none;}
+.channel-index a small{display:block;font-size:var(--fs-xs);color:var(--ink-faint);}
+
+/* 深度解析 */
+.analysis{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-l);padding:var(--space-5);box-shadow:var(--shadow-s);}
+.analysis h2{font-size:var(--fs-h2);margin-bottom:var(--space-2);}
+.analysis .lead{color:var(--ink-soft);font-size:var(--fs-s);margin-bottom:var(--space-4);}
+.analysis h3{font-size:var(--fs-h3);margin:var(--space-5) 0 var(--space-2);padding-left:12px;border-left:4px solid var(--brand);}
+.analysis p{color:var(--ink-soft);}
+.analysis .claim{
+  background:var(--surface-2);border-left:4px solid var(--accent);
+  padding:var(--space-3) var(--space-4);border-radius:0 var(--radius-s) var(--radius-s) 0;
+  font-size:.96rem;color:var(--ink);margin:var(--space-3) 0;
+}
+.check-table{width:100%;border-collapse:collapse;font-size:var(--fs-s);margin:var(--space-3) 0;}
+.check-table th,.check-table td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top;}
+.check-table th{background:var(--surface-2);font-weight:700;}
+.check-table td{color:var(--ink-soft);}
+
+/* 体验指南 步骤 */
+.steps{counter-reset:step;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-3);}
+.steps li{
+  counter-increment:step;position:relative;padding:var(--space-3) var(--space-4) var(--space-3) 58px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);font-size:var(--fs-s);
+}
+.steps li::before{
+  content:counter(step,decimal-leading-zero);position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-weight:800;color:var(--brand);font-size:1.05rem;letter-spacing:.02em;
+}
+.steps li b{display:block;color:var(--ink);font-size:.96rem;}
+
+/* FAQ */
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);margin-bottom:var(--space-2);overflow:hidden;}
+.faq summary{
+  cursor:pointer;padding:var(--space-3) var(--space-4);font-weight:600;font-size:.96rem;
+  list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;
+}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"＋";color:var(--brand);font-weight:700;flex:0 0 auto;}
+.faq details[open] summary::after{content:"－";}
+.faq details[open] summary{background:var(--surface-2);}
+.faq .faq-body{padding:var(--space-3) var(--space-4) var(--space-4);font-size:var(--fs-s);color:var(--ink-soft);}
+
+/* 评论 */
+.comment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3);}
+.comment{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:var(--space-3) var(--space-4);font-size:var(--fs-s);}
+.comment .who{display:flex;gap:8px;align-items:center;margin-bottom:6px;}
+.comment .avatar{width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--fs-xs);}
+.comment .who b{font-size:var(--fs-s);}
+.comment .who time{font-size:var(--fs-xs);color:var(--ink-faint);margin-left:auto;}
+.comment p{margin:0;color:var(--ink-soft);}
+.comment .ref{color:var(--brand-deep);font-weight:600;}
+
+/* 资讯紧凑列表 */
+.news-list{list-style:none;padding:0;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;}
+.news-list li{display:flex;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--line);font-size:var(--fs-s);align-items:baseline;}
+.news-list li:last-child{border-bottom:0;}
+.news-list time{flex:0 0 66px;color:var(--accent);font-weight:600;font-size:var(--fs-xs);}
+.news-list span{color:var(--ink-soft);}
+.news-list b{color:var(--ink);font-weight:600;}
+
+/* 相关推荐标签 */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:var(--space-2);}
+.tag-cloud a{
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:999px;
+  padding:5px 14px;font-size:var(--fs-s);color:var(--ink-soft);
+}
+.tag-cloud a:hover{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-deep);text-decoration:none;}
+
+/* 榜单 */
+.rank-list{list-style:none;padding:0;margin:0;counter-reset:rank;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;}
+.rank-list li{
+  counter-increment:rank;display:flex;gap:var(--space-3);align-items:flex-start;
+  padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--line);font-size:var(--fs-s);
+}
+.rank-list li:last-child{border-bottom:0;}
+.rank-list li::before{
+  content:counter(rank);flex:0 0 26px;height:26px;border-radius:6px;background:var(--surface-2);
+  color:var(--brand-deep);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:var(--fs-s);
+}
+.rank-list li:nth-child(1)::before{background:var(--brand);color:#fff;}
+.rank-list li:nth-child(2)::before{background:var(--brand-soft);color:var(--brand-deep);}
+.rank-list h4{font-size:.94rem;margin-bottom:2px;}
+.rank-list p{margin:0;color:var(--ink-faint);font-size:var(--fs-xs);}
+.rank-list .score{margin-left:auto;flex:0 0 auto;color:var(--accent);font-weight:700;font-size:var(--fs-s);}
+
+/* 侧栏 */
+.sidebar{position:sticky;top:calc(var(--sticky-stack) + 16px);display:flex;flex-direction:column;gap:var(--space-4);}
+.side-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:var(--space-4);box-shadow:var(--shadow-s);}
+.side-card h3{font-size:.98rem;margin-bottom:var(--space-3);display:flex;align-items:center;gap:8px;}
+.side-card h3::before{content:"";width:4px;height:16px;background:var(--brand);border-radius:2px;}
+.side-nav{list-style:none;padding:0;margin:0;font-size:var(--fs-s);}
+.side-nav a{display:block;padding:5px 8px;border-radius:var(--radius-s);color:var(--ink-soft);border-left:2px solid transparent;}
+.side-nav a:hover{background:var(--surface-2);text-decoration:none;}
+.side-nav a.active{color:var(--brand-deep);background:var(--brand-soft);border-left-color:var(--brand);font-weight:600;}
+.side-hot{list-style:none;padding:0;margin:0;font-size:var(--fs-s);}
+.side-hot li{padding:7px 0;border-bottom:1px dashed var(--line);display:flex;gap:8px;align-items:baseline;}
+.side-hot li:last-child{border-bottom:0;}
+.side-hot .n{color:var(--brand);font-weight:800;font-size:var(--fs-xs);flex:0 0 auto;}
+.side-hot a{color:var(--ink-soft);}
+.side-note{font-size:var(--fs-xs);color:var(--ink-faint);background:var(--surface-2);border-radius:var(--radius-s);padding:10px 12px;line-height:1.6;}
+
+/* 回顶 */
+.to-top{
+  position:fixed;right:18px;bottom:22px;z-index:40;
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);
+  background:var(--surface);box-shadow:var(--shadow-m);cursor:pointer;
+  color:var(--brand-deep);font-size:18px;display:none;align-items:center;justify-content:center;
+}
+.to-top.on{display:flex;}
+
+/* 页脚 */
+.site-footer{background:var(--ink);color:#d8ccbb;padding:var(--space-6) var(--space-4) var(--space-5);font-size:var(--fs-s);}
+.footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(0,1fr));gap:var(--space-5);}
+.footer-brand{display:flex;gap:10px;align-items:center;margin-bottom:var(--space-2);}
+.footer-brand svg{width:32px;height:32px;}
+.footer-brand b{color:#fff;font-size:1.05rem;}
+.footer-inner p{color:#b6a893;line-height:1.7;}
+.footer-inner h4{color:#fff;font-size:.9rem;margin-bottom:var(--space-2);letter-spacing:.04em;}
+.footer-links{list-style:none;padding:0;margin:0;}
+.footer-links li{margin-bottom:5px;}
+.footer-links a{color:#c7b9a5;font-size:var(--fs-s);}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{
+  max-width:1180px;margin:var(--space-5) auto 0;padding-top:var(--space-3);
+  border-top:1px solid #463e35;display:flex;justify-content:space-between;gap:var(--space-3);
+  flex-wrap:wrap;color:#8f8271;font-size:var(--fs-xs);
+}
+
+/* 响应式 */
+@media (max-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr);}
+  .sidebar{position:static;flex-direction:row;flex-wrap:wrap;}
+  .sidebar .side-card{flex:1 1 260px;}
+  .hero{grid-template-columns:minmax(0,1fr);padding-top:var(--space-5);}
+  .hero-art{max-width:430px;margin:0 auto;width:100%;}
+  .footer-inner{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:720px){
+  .header-inner{position:relative;}
+  .menu-btn{display:inline-block;}
+  .main-nav{
+    display:none;width:100%;flex-direction:column;gap:0;order:5;
+    border-top:1px solid var(--line);padding-top:var(--space-2);margin-top:var(--space-2);
+  }
+  .main-nav.open{display:flex;}
+  .main-nav a{padding:9px 8px;border-bottom:1px dashed var(--line);}
+  .header-tools{margin-left:auto;}
+  .search-box input{width:130px;}
+  .search-box input:focus{width:150px;}
+  .hero{padding-top:var(--space-4);}
+  .overview-grid{grid-template-columns:1fr;}
+  .feature-split{grid-template-columns:1fr;}
+  .channel-index{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .comment-grid{grid-template-columns:1fr;}
+  .footer-inner{grid-template-columns:1fr;}
+  .hero-metrics{gap:var(--space-4);}
+  .analysis{padding:var(--space-4);}
+  .check-table{font-size:var(--fs-xs);}
+  .check-table th,.check-table td{padding:6px;}
+  .sidebar{flex-direction:column;}
+  .footer-bottom{flex-direction:column;}
+}
+@media (max-width:400px){
+  .search-box input{width:104px;}
+  .brand-text{font-size:1rem;}
+  .notice-bar{font-size:var(--fs-xs);padding:6px 10px;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{transition:none !important;animation:none !important;}
+  a:hover,.btn-primary:hover,.btn-ghost:hover{transform:none !important;}
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<div class="sticky-wrap">
+  <div class="notice-bar" role="region" aria-label="更新公告">
+    <span class="brand-tag">吃瓜轻量版</span>
+    <span>11 月 6 日更新：星光夜音乐节退票进度表、剧集《雾港来信》定档 11 月 21 日、综艺《即刻出发》第七期嘉宾名单已补入时间线。</span>
+    <time datetime="2026-11-06">2026-11-06</time>
+  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/#top" aria-label="吃瓜轻量版 首页">
+        <svg viewBox="0 0 32 32" role="img" aria-hidden="true" focusable="false">
+          <circle cx="16" cy="16" r="15" fill="#d64a36"/>
+          <path d="M16 16 L16 2 A14 14 0 0 1 30 16 Z" fill="#f7e6c4"/>
+          <path d="M16 16 L16 2 A14 14 0 0 0 2 16 Z" fill="#f2d3a6" opacity=".55"/>
+          <circle cx="10" cy="12" r="1.5" fill="#302a26"/>
+          <circle cx="19" cy="19" r="1.5" fill="#302a26"/>
+          <circle cx="21" cy="10" r="1.3" fill="#302a26"/>
+          <path d="M16 16 q2 4 -1 6 q-3 1 -4 -2" stroke="#a8321f" stroke-width="1.2" fill="none" opacity=".7"/>
+        </svg>
+        <span class="brand-text">吃瓜<span>轻量版</span></span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="主题导航">
+        <a href="/#overview">领域概览</a>
+        <a href="/#picked">精选推荐</a>
+        <a href="/#latest">最新更新</a>
+        <a href="/#channels">分类入口</a>
+        <a href="/#analysis">深度解析</a>
+        <a href="/#guide">体验指南</a>
+        <a href="/#faq">常见问题</a>
+        <a href="/#comments">用户评论</a>
+      </nav>
+      <div class="header-tools">
+        <div class="search-box">
+          <span class="s-icon" aria-hidden="true">⌕</span>
+          <input type="search" id="searchInput" placeholder="找艺人、节目、事件" aria-label="站内搜索">
+          <div class="search-feedback" id="searchFeedback" role="status" aria-live="polite"></div>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mainNav">菜单</button>
+        <a class="btn-entry" href="/#latest">看今日更新</a>
+      </div>
+    </div>
+  </header>
+</div>
+
+<main id="top">
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-copy">
+      <span class="hero-eyebrow">省流 · 时间线 · 可核对</span>
+      <h1 id="heroTitle">吃瓜轻量版<em>：把娱乐事件按时间理一遍</em></h1>
+      <p class="hero-lead">综艺录制、剧集定档、巡演票务、品牌代言与场外争议，统一拆成“已确认”“当事方回应”“待核对”三层。每条热门事件给出时间点、来源与后续节点，不堆情绪，先看清发生了什么、谁先说的、哪一步还没落地。</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="/#latest">查看 11 月 6 日更新</a>
+        <a class="btn-ghost" href="/#guide">读一遍核对方法</a>
+      </div>
+      <div class="hero-metrics" aria-label="内容规模">
+        <div class="metric"><b>9</b><span>固定频道</span></div>
+        <div class="metric"><b>142</b><span>本周事件条目</span></div>
+        <div class="metric"><b>37</b><span>已附官方回应</span></div>
+        <div class="metric"><b>11/06</b><span>最近一次整理</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 420 386" role="img">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fbe4dc"/>
+            <stop offset="1" stop-color="#f3ece0"/>
+          </linearGradient>
+        </defs>
+        <rect x="14" y="16" width="392" height="354" rx="26" fill="url(#g1)"/>
+        <rect x="44" y="52" width="332" height="42" rx="10" fill="#fff" stroke="#cbbba4"/>
+        <circle cx="66" cy="73" r="8" fill="#d64a36"/>
+        <rect x="84" y="67" width="120" height="8" rx="4" fill="#cbbba4"/>
+        <rect x="44" y="112" width="200" height="12" rx="6" fill="#d64a36" opacity=".85"/>
+        <rect x="44" y="136" width="328" height="7" rx="3.5" fill="#e4d9c9"/>
+        <rect x="44" y="152" width="286" height="7" rx="3.5" fill="#e4d9c9"/>
+        <line x1="72" y1="196" x2="72" y2="330" stroke="#cbbba4" stroke-width="3"/>
+        <circle cx="72" cy="200" r="9" fill="#d64a36"/>
+        <circle cx="72" cy="246" r="9" fill="#fff" stroke="#d64a36" stroke-width="3"/>
+        <circle cx="72" cy="292" r="9" fill="#fff" stroke="#1f7a6a" stroke-width="3"/>
+        <rect x="94" y="188" width="180" height="10" rx="5" fill="#b9a98f"/>
+        <rect x="94" y="236" width="220" height="10" rx="5" fill="#cbbba4"/>
+        <rect x="94" y="282" width="150" height="10" rx="5" fill="#1f7a6a" opacity=".6"/>
+        <rect x="276" y="176" width="96" height="30" rx="15" fill="#fff" stroke="#1f7a6a"/>
+        <rect x="288" y="187" width="70" height="8" rx="4" fill="#1f7a6a"/>
+        <rect x="278" y="264" width="94" height="30" rx="15" fill="#302a26"/>
+        <rect x="290" y="275" width="68" height="8" rx="4" fill="#f7e6c4"/>
+      </svg>
+      <div class="float-card fc-1"><b>《雾港来信》</b>11 月 21 日 20:00 开播</div>
+      <div class="float-card fc-2"><b>星光夜音乐节</b>退票节点已过 3 个</div>
+      <div class="float-card fc-3"><b>《即刻出发》</b>第七期 11 月 8 日录制</div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <div class="main-col">
+
+      <!-- 1. 领域概览 -->
+      <section class="section" id="overview" aria-labelledby="overviewTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">OVERVIEW</span><h2 id="overviewTitle">领域概览：轻量娱乐资讯怎么读</h2></div>
+          <span class="sub">覆盖剧集、综艺、音乐、品牌、场外五大线索</span>
+        </div>
+        <div class="overview-grid">
+          <div class="card">
+            <span class="tagline">剧集线</span>
+            <h3>定档与平台排播</h3>
+            <p>《雾港来信》11 月 21 日爱奇艺独播，共 24 集，首更 4 集；同期《长夜未央》从 11 月 18 日调至 11 月 25 日。排播变动以平台片单页为准。</p>
+          </div>
+          <div class="card">
+            <span class="tagline">综艺线</span>
+            <h3>录制与嘉宾名单</h3>
+            <p>《即刻出发》第七期 11 月 8 日在长沙录制，常驻 5 人加飞行嘉宾 2 人；名单变化看节目官微 11 月 5 日 19:40 发布的通告。</p>
+          </div>
+          <div class="card">
+            <span class="tagline">音乐线</span>
+            <h3>巡演票务与场地</h3>
+            <p>星光夜音乐节 11 月 1 日公告延期，11 月 4 日开放退票申请，11 月 12 日为材料补齐截止；大麦与猫眼的退款批次不同。</p>
+          </div>
+          <div class="card">
+            <span class="tagline">品牌线</span>
+            <h3>代言与合约周期</h3>
+            <p>11 月 3 日某饮料品牌官宣林砚为区域代言人，合约期至 2027 年 3 月；同月艺人商务同框照被误读为“合约终止”，品牌未回应。</p>
+          </div>
+          <div class="card">
+            <span class="tagline">场外线</span>
+            <h3>舆情与官方回应</h3>
+            <p>11 月 2 日起关于片场秩序的帖子集中出现，剧组 11 月 5 日发声明，否认“替身受伤”说法，未提及拍摄是否延误。</p>
+          </div>
+          <div class="card">
+            <span class="tagline">方法线</span>
+            <h3>三层信息分层</h3>
+            <p>事实、回应、推测分开写。看到“已确认”要有时间与发布方；看到“回应”要标谁说的；看到“推测”就明确它还没被证实。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 精选内容推荐 -->
+      <section class="section" id="picked" aria-labelledby="pickedTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">PICKED</span><h2 id="pickedTitle">精选内容推荐：五条值得先看的线</h2></div>
+        </div>
+        <div class="feature-split">
+          <article class="card feature-lead">
+            <img src="https://picsum.photos/seed/fog-harbor-letter/640/400" width="640" height="400" loading="lazy" alt="雾港码头夜景的剧集氛围示意图" style="object-fit:cover;">
+            <div class="fl-body">
+              <h3>《雾港来信》定档 11 月 21 日：24 集、首更 4 集</h3>
+              <p>平台 11 月 6 日片单更新，主创 11 月 4 日录制看片会；此前网传“12 月上线”的说法来自 10 月中旬一张排播截图，已被本次片单覆盖。</p>
+              <a href="/#analysis">看排播与争议的核对表 →</a>
+            </div>
+          </article>
+          <div class="card pad mini-list">
+            <div class="mini-item">
+              <img src="https://picsum.photos/seed/night-festival-refund/168/124" width="168" height="124" loading="lazy" alt="音乐节退票窗口与排队示意图" style="object-fit:cover;">
+              <div><h4>星光夜音乐节退票：11 月 12 日补齐截止</h4><p>大麦批次 11 月 4 日—8 日，猫眼批次 11 月 6 日—12 日</p><time datetime="2026-11-06">11-06</time></div>
+            </div>
+            <div class="mini-item">
+              <img src="https://picsum.photos/seed/go-now-ep7/168/124" width="168" height="124" loading="lazy" alt="综艺录制现场嘉宾牌示意图" style="object-fit:cover;">
+              <div><h4>《即刻出发》第七期飞行嘉宾落在两位新面孔</h4><p>节目官微 11 月 5 日通告，录制 11 月 8 日</p><time datetime="2026-11-05">11-05</time></div>
+            </div>
+            <div class="mini-item">
+              <img src="https://picsum.photos/seed/lin-yan-brand/168/124" width="168" height="124" loading="lazy" alt="品牌代言官宣海报版式示意图" style="object-fit:cover;">
+              <div><h4>林砚区域代言：合约到 2027 年 3 月</h4><p>品牌官微 11 月 3 日 10:00 发布，非全线代言</p><time datetime="2026-11-03">11-03</time></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 最新更新 -->
+      <section class="section" id="latest" aria-labelledby="latestTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">LATEST</span><h2 id="latestTitle">最新更新：近三天的条目变化</h2></div>
+          <span class="sub">按发布时间倒序</span>
+        </div>
+        <ol class="timeline">
+          <li>
+            <h4>《雾港来信》平台片单确认 11 月 21 日开播</h4>
+            <div class="t-meta"><time datetime="2026-11-06">11 月 6 日 09:20</time> · 来源：平台片单页</div>
+            <p>首更 4 集，之后每周五、周六各更 2 集。此前 10 月 19 日的“12 月档”截图未标注来源，本次覆盖。</p>
+          </li>
+          <li>
+            <h4>星光夜音乐节猫眼退票批次开放</h4>
+            <div class="t-meta"><time datetime="2026-11-06">11 月 6 日 08:00</time> · 来源：猫眼演出公告</div>
+            <p>退票申请至 11 月 12 日 23:59，需上传购票截图与本人证件信息，审核通过后 7 个工作日内原路退回。</p>
+          </li>
+          <li>
+            <h4>《即刻出发》第七期嘉宾名单发布</h4>
+            <div class="t-meta"><time datetime="2026-11-05">11 月 5 日 19:40</time> · 来源：节目官微</div>
+            <p>常驻 5 人全部到场，飞行嘉宾两人；未提及原定嘉宾调整原因，评论区询问集中在“临时换人”。</p>
+          </li>
+          <li>
+            <h4>剧组声明否认“替身受伤”说法</h4>
+            <div class="t-meta"><time datetime="2026-11-05">11 月 5 日 14:10</time> · 来源：剧组官方声明</div>
+            <p>声明称拍摄正常推进，未回应 11 月 2 日帖子里提到的“连续夜戏”问题，后续节点未公布。</p>
+          </li>
+          <li>
+            <h4>《长夜未央》排播从 11 月 18 日调至 25 日</h4>
+            <div class="t-meta"><time datetime="2026-11-04">11 月 4 日 16:30</time> · 来源：平台排播表</div>
+            <p>未说明原因。原定 11 月 17 日的超前点映场次同步顺延一周。</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 4. 分类入口 -->
+      <section class="section" id="channels" aria-labelledby="channelsTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">CHANNELS</span><h2 id="channelsTitle">分类入口：按你关心的类别找</h2></div>
+        </div>
+        <div class="channel-index">
+          <a href="/#picked">剧集定档<small>排播与首更集数</small></a>
+          <a href="/#latest">综艺录制<small>嘉宾与现场动态</small></a>
+          <a href="/#picked">演唱会票务<small>开票、退票、场地</small></a>
+          <a href="/#overview">品牌代言<small>合约期与title</small></a>
+          <a href="/#analysis">场外争议<small>事实与回应分层</small></a>
+          <a href="/#guide">信息核对<small>时间线与来源</small></a>
+          <a href="/#comments">粉丝讨论<small>具体条目评论</small></a>
+          <a href="/#rank">本周热榜<small>按讨论量排序</small></a>
+        </div>
+      </section>
+
+      <!-- 5. 深度解析（唯一主体阅读区） -->
+      <section class="section" id="analysis" aria-labelledby="analysisTitle">
+        <div class="analysis">
+          <span class="section-kicker">DEEP READ</span>
+          <h2 id="analysisTitle">深度解析：延期公告和退票进度为什么对不上</h2>
+          <p class="lead">以星光夜音乐节 11 月 1 日延期公告为样本，拆解“公告时间”“平台执行”“用户感知”三层错位。文中判断可被反驳，也欢迎拿公告原文来对。</p>
+
+          <h3>一、公告发出到实际可退，中间隔了 3 天</h3>
+          <p>11 月 1 日 21:06，星光夜音乐节主办方在微博发布延期说明，措辞是“因场地报批流程调整，原定 11 月 14 日—15 日的演出延期，具体日期另行通知”。公告没有写退票窗口，只写“将协调各平台尽快处理”。11 月 4 日 10:00，大麦才上线退票入口。这段 3 天的空档，是社交平台上情绪最集中的时段。</p>
+          <div class="claim">判断：延期类公告如果不同时给出退票时间表，用户的焦虑强度会在 48 小时内达到峰值，而不是等平台上线之后。</div>
+          <p>可核对的位置有两个：公告原文的第一段，以及大麦 11 月 4 日的弹窗通知。前者没有时间表，后者有明确起止。把这两处放在一起，就能解释为什么 11 月 2 日到 3 日的帖子全是“到底能不能退”，而不是“多久能到账”。</p>
+
+          <h3>二、两个平台的退款批次不同，造成“有人退了有人没退”</h3>
+          <p>猫眼演出 11 月 6 日 08:00 开放申请，截止 11 月 12 日 23:59；大麦批次 11 月 4 日—8 日。审核通过后，大麦写明 7 个工作日内原路退回，猫眼写“审核后 7 个工作日内”。字面接近，实际差异在审核环节：大麦要求上传购票截图，猫眼要求购票截图加本人证件页。</p>
+          <table class="check-table">
+            <thead><tr><th>核对项</th><th>大麦</th><th>猫眼</th></tr></thead>
+            <tbody>
+              <tr><td>开放时间</td><td>11 月 4 日 10:00</td><td>11 月 6 日 08:00</td></tr>
+              <tr><td>截止时间</td><td>11 月 8 日 23:59</td><td>11 月 12 日 23:59</td></tr>
+              <tr><td>所需材料</td><td>购票截图</td><td>购票截图 + 证件页</td></tr>
+              <tr><td>到账周期</td><td>7 个工作日内</td><td>审核后 7 个工作日内</td></tr>
+            </tbody>
+          </table>
+          <p>所以“同一天申请、一边到账一边没到”并非平台有意拖延，而是截止时间与材料要求不同。反驳这个判断的方法很简单：找一个 11 月 4 日在大麦申请、11 月 6 日在猫眼申请、两边材料都齐全却到账差异超过 5 个工作日的案例。</p>
+
+          <h3>三、主办方口径与票务平台口径的差异点</h3>
+          <p>11 月 5 日 11:20，主办方在评论区回复“所有平台退款已同步启动”。同日 15:00，猫眼客服在自动回复里写“退款申请尚在审核”。两句都不算假，但主语不同：主办方说的是“启动”，平台说的是“审核中”。转述时把主语丢掉，就会变成互相矛盾的版本，这也是当晚多个账号截图传播的原因。</p>
+          <div class="claim">判断：把“启动”读成“到账”，是本轮误读的主要来源；区分动词比追究谁在说谎更有用。</div>
+          <p>可核对的是两条原文的时间戳：11 月 5 日 11:20 的评论回复，和 11 月 5 日 15:00 的客服自动回复。推测部分只有一条——主办方是否已把款项打给平台，目前没有公开凭证，属于待核对。</p>
+
+          <h3>四、对读者的实际建议</h3>
+          <p>手里有大麦订单的，11 月 8 日 23:59 前提交，材料只要购票截图；走猫眼的，11 月 12 日前提交，证件页提前拍好。两边都别在 11 月 9 日之后才动，大麦通道已经关了。真要追进度，拿订单号去问平台客服，比在评论区问主办方有效，因为钱在平台侧流转。</p>
+        </div>
+      </section>
+
+      <!-- 6. 体验指南 -->
+      <section class="section" id="guide" aria-labelledby="guideTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">GUIDE</span><h2 id="guideTitle">体验指南：四步把一条娱乐消息看明白</h2></div>
+        </div>
+        <ol class="steps">
+          <li><b>先找发布方和时间</b>官方账号、平台片单页、节目通告，三者优先级高于截图与搬运号。没有时间戳的消息先放一边。</li>
+          <li><b>区分“确认”与“回应”</b>确认是已发生的事实，回应是当事方说的话。两者都能核对，但含义不同，不要混着读。</li>
+          <li><b>把后续节点标出来</b>退票截止、录制日期、开播时间、合约到期，有节点的消息才值得持续跟。</li>
+          <li><b>遇到推测就停一下</b>没有来源、没有时间、没有发布方的部分，标成待核对，别当结论转出去。</li>
+        </ol>
+      </section>
+
+      <!-- 7. FAQ -->
+      <section class="section faq" id="faq" aria-labelledby="faqTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">FAQ</span><h2 id="faqTitle">常见问题</h2></div>
+        </div>
+        <details>
+          <summary>《雾港来信》到底哪天开播，首更几集？</summary>
+          <div class="faq-body">平台片单页写的是 11 月 21 日 20:00 开播，首更 4 集，之后每周五、周六各更 2 集。10 月中旬流传的“12 月档”截图没有标注来源，已被本次片单覆盖。以片单页为准即可。</div>
+        </details>
+        <details>
+          <summary>星光夜音乐节退票，大麦和猫眼的截止时间一样吗？</summary>
+          <div class="faq-body">不一样。大麦批次 11 月 4 日 10:00 开放、11 月 8 日 23:59 截止；猫眼批次 11 月 6 日 08:00 开放、11 月 12 日 23:59 截止。猫眼还多要求一张本人证件页，材料不齐会延后审核。</div>
+        </details>
+        <details>
+          <summary>《即刻出发》第七期换人了吗？</summary>
+          <div class="faq-body">节目官微 11 月 5 日 19:40 的通告里，常驻 5 人全部到场，飞行嘉宾为两位新面孔。通告没提原定嘉宾，也没说明调整原因，所以“临时换人”目前只是评论区推测，没有官方确认。</div>
+        </details>
+        <details>
+          <summary>林砚是全线代言还是区域代言？</summary>
+          <div class="faq-body">品牌官微 11 月 3 日 10:00 的文案写的是区域代言人，合约期至 2027 年 3 月。同月出现的“合约终止”说法来自一张同框照的解读，品牌方未回应，属于待核对信息。</div>
+        </details>
+        <details>
+          <summary>剧组声明之后，拍摄还正常吗？</summary>
+          <div class="faq-body">11 月 5 日 14:10 的声明称拍摄正常推进，否认“替身受伤”。声明没有提 11 月 2 日帖子里说的“连续夜戏”，也没有给出后续拍摄节点，所以只能确认声明本身存在，不能据此推断场外讨论结束。</div>
+        </details>
+      </section>
+
+      <!-- 8. 用户评论 -->
+      <section class="section" id="comments" aria-labelledby="commentsTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">COMMENTS</span><h2 id="commentsTitle">用户评论：来自具体条目的反馈</h2></div>
+          <span class="sub">共 6 条，按时间排列</span>
+        </div>
+        <div class="comment-grid">
+          <div class="comment">
+            <div class="who"><span class="avatar">阿</span><b>阿柘</b><time datetime="2026-11-06">11-06 10:12</time></div>
+            <p>大麦 11 月 4 日中午提交的，今天早上到账了，比写的 7 个工作日快。<span class="ref">星光夜音乐节</span>这单算是落地了。</p>
+          </div>
+          <div class="comment">
+            <div class="who"><span class="avatar">灯</span><b>灯下走</b><time datetime="2026-11-06">11-06 09:35</time></div>
+            <p>猫眼还要证件页，拍完上传又提示模糊，来回折腾三次。<span class="ref">退款入口</span>的提示能写清楚点就好了。</p>
+          </div>
+          <div class="comment">
+            <div class="who"><span class="avatar">雾</span><b>雾里看花</b><time datetime="2026-11-05">11-05 22:40</time></div>
+            <p>《雾港来信》定到 21 号，<span class="ref">首更 4 集</span>这个排法对追剧的人挺友好，不用等太久就能判断要不要弃。</p>
+          </div>
+          <div class="comment">
+            <div class="who"><span class="avatar">半</span><b>半糖不加冰</b><time datetime="2026-11-05">11-05 20:18</time></div>
+            <p>“临时换人”说得有鼻子有眼，结果通告里根本没提原嘉宾，<span class="ref">《即刻出发》第七期</span>这事就是有人自己脑补的吧。</p>
+          </div>
+          <div class="comment">
+            <div class="who"><span class="avatar">青</span><b>青柠汽水</b><time datetime="2026-11-05">11-05 17:02</time></div>
+            <p>剧组声明说拍摄正常，但没回应连续夜戏，这个回避得有点明显。不站队，就想知道<span class="ref">场外争议</span>后面还有没有下文。</p>
+          </div>
+          <div class="comment">
+            <div class="who"><span class="avatar">松</span><b>松风慢</b><time datetime="2026-11-04">11-04 15:47</time></div>
+            <p>《长夜未央》从 18 号挪到 25 号，提前买的点映场也跟着顺延，<span class="ref">排播调整</span>至少通知到位了，比藏着强。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. 相关资讯 -->
+      <section class="section" id="news" aria-labelledby="newsTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">NEWS</span><h2 id="newsTitle">相关资讯</h2></div>
+        </div>
+        <ul class="news-list">
+          <li><time datetime="2026-11-06">11-06</time><span><b>《雾港来信》看片会反馈</b>：首批观众提到前两集节奏偏慢，主创未回应剪辑版本差异。</span></li>
+          <li><time datetime="2026-11-05">11-05</time><span><b>星光夜音乐节</b>主办方回复媒体询问：场地报批材料已于 10 月 30 日补交，结果未出。</span></li>
+          <li><time datetime="2026-11-05">11-05</time><span><b>《即刻出发》</b>录制场地由原定棚内改为长沙郊外营地，节目组未说明原因。</span></li>
+          <li><time datetime="2026-11-04">11-04</time><span><b>《长夜未央》</b>超前点映场次顺延一周，购票用户可改期或退票。</span></li>
+          <li><time datetime="2026-11-03">11-03</time><span><b>林砚</b>区域代言官宣，品牌方同步上线线下物料，未公布投放城市数量。</span></li>
+          <li><time datetime="2026-11-02">11-02</time><span><b>片场秩序帖</b>集中出现，最早一条发布于 11 月 2 日 21:30，账号已设置为不可见。</span></li>
+        </ul>
+      </section>
+
+      <!-- 10. 相关推荐 -->
+      <section class="section" id="related" aria-labelledby="relatedTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">RELATED</span><h2 id="relatedTitle">相关推荐：常被一起搜索的词</h2></div>
+        </div>
+        <div class="tag-cloud">
+          <a href="/#analysis">星光夜音乐节退票流程</a>
+          <a href="/#picked">雾港来信定档11月21日</a>
+          <a href="/#latest">即刻出发第七期嘉宾名单</a>
+          <a href="/#overview">林砚品牌代言合约期</a>
+          <a href="/#analysis">长夜未央排播调整</a>
+          <a href="/#guide">片场秩序声明原文</a>
+          <a href="/#comments">猫眼退款审核要多久</a>
+          <a href="/#faq">大麦退票截止时间</a>
+          <a href="/#rank">本周娱乐事件讨论量</a>
+        </div>
+      </section>
+
+      <!-- 11. 补充板块：本周讨论榜 -->
+      <section class="section" id="rank" aria-labelledby="rankTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">WEEKLY</span><h2 id="rankTitle">本周讨论榜：按条目讨论量排序</h2></div>
+          <span class="sub">统计区间 11 月 1 日—11 月 6 日</span>
+        </div>
+        <ol class="rank-list">
+          <li>
+            <div><h4>星光夜音乐节退票</h4><p>讨论量 18.6 万 · 核心争点：截止时间与到账差异</p></div>
+            <span class="score">18.6w</span>
+          </li>
+          <li>
+            <div><h4>《雾港来信》定档 11 月 21 日</h4><p>讨论量 12.3 万 · 核心争点：首更集数与后续节奏</p></div>
+            <span class="score">12.3w</span>
+          </li>
+          <li>
+            <div><h4>《即刻出发》第七期嘉宾名单</h4><p>讨论量 8.9 万 · 核心争点：飞行嘉宾是否临时更换</p></div>
+            <span class="score">8.9w</span>
+          </li>
+          <li>
+            <div><h4>剧组声明与片场秩序</h4><p>讨论量 7.4 万 · 核心争点：声明未回应的部分</p></div>
+            <span class="score">7.4w</span>
+          </li>
+          <li>
+            <div><h4>林砚区域代言</h4><p>讨论量 5.1 万 · 核心争点：区域与全线的区别</p></div>
+            <span class="score">5.1w</span>
+          </li>
+        </ol>
+      </section>
+
+    </div>
+
+    <aside class="sidebar" aria-label="侧栏">
+      <div class="side-card">
+        <h3>本页导航</h3>
+        <nav aria-label="侧栏目录">
+          <ul class="side-nav" id="sideNav">
+            <li><a href="/#overview">领域概览</a></li>
+            <li><a href="/#picked">精选内容推荐</a></li>
+            <li><a href="/#latest">最新更新</a></li>
+            <li><a href="/#channels">分类入口</a></li>
+            <li><a href="/#analysis">深度解析</a></li>
+            <li><a href="/#guide">体验指南</a></li>
+            <li><a href="/#faq">常见问题</a></li>
+            <li><a href="/#comments">用户评论</a></li>
+            <li><a href="/#news">相关资讯</a></li>
+            <li><a href="/#related">相关推荐</a></li>
+            <li><a href="/#rank">本周讨论榜</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="side-card">
+        <h3>今日被搜最多</h3>
+        <ol class="side-hot">
+          <li><span class="n">01</span><a href="/#analysis">音乐节退票截止到几号</a></li>
+          <li><span class="n">02</span><a href="/#picked">雾港来信首更几集</a></li>
+          <li><span class="n">03</span><a href="/#latest">即刻出发第七期嘉宾</a></li>
+          <li><span class="n">04</span><a href="/#overview">林砚代言是全线吗</a></li>
+          <li><span class="n">05</span><a href="/#news">长夜未央为什么延后</a></li>
+        </ol>
+      </div>
+      <div class="side-card">
+        <h3>条目说明</h3>
+        <p class="side-note">页面条目含示例内容，用于演示信息分层写法。日期与节点以 11 月 6 日整理的公开通告为准，涉及金额与到账时间请以各平台订单页显示为最终依据。</p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<button class="to-top" id="toTop" aria-label="回到顶部" title="回到顶部">↑</button>
+
+<footer class="site-footer" id="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <circle cx="16" cy="16" r="15" fill="#d64a36"/>
+          <path d="M16 16 L16 2 A14 14 0 0 1 30 16 Z" fill="#f7e6c4"/>
+          <circle cx="10" cy="12" r="1.5" fill="#302a26"/>
+          <circle cx="19" cy="19" r="1.5" fill="#302a26"/>
+        </svg>
+        <b>吃瓜轻量版</b>
+      </div>
+      <p>把娱乐事件拆成时间线、当事方回应与待核对项，先看清楚节点，再决定要不要跟。</p>
+      <p>页面更新时间：2026 年 11 月 6 日 09:20，对应《雾港来信》片单确认与猫眼退票批次开放两项。</p>
+    </div>
+    <div>
+      <h4>频道</h4>
+      <ul class="footer-links">
+        <li><a href="/#picked">剧集定档</a></li>
+        <li><a href="/#latest">综艺录制</a></li>
+        <li><a href="/#analysis">票务退改</a></li>
+        <li><a href="/#overview">品牌代言</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>栏目</h4>
+      <ul class="footer-links">
+        <li><a href="/#analysis">深度解析</a></li>
+        <li><a href="/#guide">体验指南</a></li>
+        <li><a href="/#faq">常见问题</a></li>
+        <li><a href="/#rank">本周讨论榜</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>说明</h4>
+      <ul class="footer-links">
+        <li><a href="/#news">相关资讯</a></li>
+        <li><a href="/#comments">用户评论</a></li>
+        <li><a href="/#related">相关推荐</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>示例数据说明：页面条目含演示用示例内容，涉及具体时间与数字请在原平台复核。</span>
+    <span>© 2026 吃瓜轻量版 · 内容仅供信息参考</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* 移动端菜单 */
+  var menuBtn = document.getElementById('menuBtn');
+  var mainNav = document.getElementById('mainNav');
+  if(menuBtn && mainNav){
+    menuBtn.addEventListener('click', function(){
+      var open = mainNav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    mainNav.addEventListener('click', function(e){
+      if(e.target.tagName === 'A'){
+        mainNav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+
+  /* 侧栏滚动高亮 */
+  var sideLinks = Array.prototype.slice.call(document.querySelectorAll('#sideNav a'));
+  var sections = sideLinks.map(function(a){
+    var id = a.getAttribute('href').replace('/#','');
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  function highlight(){
+    var pos = window.scrollY + 150;
+    var current = null;
+    sections.forEach(function(sec){
+      if(sec.offsetTop <= pos) current = sec.id;
+    });
+    sideLinks.forEach(function(a){
+      var isActive = a.getAttribute('href') === '/#' + current;
+      a.classList.toggle('active', isActive);
+    });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      window.requestAnimationFrame(function(){ highlight(); ticking = false; });
+      ticking = true;
+    }
+  }, {passive:true});
+  highlight();
+
+  /* 回顶按钮 */
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 600){ toTop.classList.add('on'); }
+    else { toTop.classList.remove('on'); }
+  }, {passive:true});
+  toTop.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  /* 本地查找 */
+  var input = document.getElementById('searchInput');
+  var feedback = document.getElementById('searchFeedback');
+  var index = [];
+  document.querySelectorAll('main h2, main h3, main h4, .mini-item h4, .news-list b, .rank-list h4, .comment p, .tag-cloud a').forEach(function(el){
+    index.push({text:(el.textContent||'').trim(), el:el});
+  });
+
+  function runSearch(){
+    var q = (input.value||'').trim();
+    if(!q){
+      feedback.classList.remove('on');
+      feedback.textContent = '';
+      return;
+    }
+    var hits = index.filter(function(item){
+      return item.text.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+    }).slice(0,5);
+    feedback.classList.add('on');
+    if(hits.length === 0){
+      feedback.innerHTML = '没有找到“' + q.replace(/[<>&]/g,'') + '”。可以试试：雾港来信、退票、即刻出发、代言。';
+      return;
+    }
+    var html = '<b style="color:#2b2622">找到 ' + hits.length + ' 条：</b><br>';
+    hits.forEach(function(h){
+      html += '· ' + h.text.slice(0,26) + (h.text.length>26?'…':'') + '<br>';
+    });
+    feedback.innerHTML = html;
+  }
+  input.addEventListener('input', runSearch);
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      var first = index.filter(function(item){
+        return item.text.toLowerCase().indexOf((input.value||'').trim().toLowerCase()) !== -1;
+      })[0];
+      if(first && first.el){
+        first.el.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+      runSearch();
+    }
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.search-box')){
+      feedback.classList.remove('on');
+    }
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"吃瓜轻量版",
+  "description":"精简娱乐资讯与事件时间线，聚合综艺录制、剧集定档、演唱会票务与艺人动态。",
+  "inLanguage":"zh-CN"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"《雾港来信》到底哪天开播，首更几集？",
+      "acceptedAnswer":{"@type":"Answer","text":"平台片单页写的是 11 月 21 日 20:00 开播，首更 4 集，之后每周五、周六各更 2 集。"}
+    },
+    {
+      "@type":"Question",
+      "name":"星光夜音乐节退票，大麦和猫眼的截止时间一样吗？",
+      "acceptedAnswer":{"@type":"Answer","text":"不一样。大麦批次 11 月 4 日开放、11 月 8 日 23:59 截止；猫眼批次 11 月 6 日开放、11 月 12 日 23:59 截止，猫眼还多要求本人证件页。"}
+    },
+    {
+      "@type":"Question",
+      "name":"《即刻出发》第七期换人了吗？",
+      "acceptedAnswer":{"@type":"Answer","text":"节目官微 11 月 5 日 19:40 通告显示常驻 5 人全部到场，飞行嘉宾为两位新面孔，通告未说明原定嘉宾调整原因。"}
+    },
+    {
+      "@type":"Question",
+      "name":"林砚是全线代言还是区域代言？",
+      "acceptedAnswer":{"@type":"Answer","text":"品牌官微 11 月 3 日 10:00 的文案写的是区域代言人，合约期至 2027 年 3 月。"}
+    },
+    {
+      "@type":"Question",
+      "name":"剧组声明之后，拍摄还正常吗？",
+      "acceptedAnswer":{"@type":"Answer","text":"11 月 5 日 14:10 的声明称拍摄正常推进，否认替身受伤说法，但未回应连续夜戏与后续拍摄节点。"}
+    }
+  ]
+}
+</script>
+</body>
+  </html>
