@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>艹死我的视频-短视频选题与剪辑观察</title>
+<meta name="description" content="艹死我的视频是一个围绕短视频选题、剪辑节奏与平台推荐机制的观察站，整理2026年10月以来值得拆的爆款案例、账号操作手法和创作者实测数据。">
+<meta name="keywords" content="艹死我的视频">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141420'/%3E%3Cpath d='M20 16l26 16-26 16z' fill='%23ff4d6d'/%3E%3Ccircle cx='50' cy='14' r='6' fill='%23ffd166'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#16161f;
+  --ink-2:#3a3a49;
+  --muted:#6b6b7d;
+  --line:#dcdbe4;
+  --line-2:#eceaf1;
+  --paper:#ffffff;
+  --paper-2:#f7f6fa;
+  --paper-3:#f1eff6;
+  --brand:#e8274b;
+  --brand-d:#b81a37;
+  --brand-soft:#ffe8ed;
+  --accent:#1f4bd8;
+  --accent-soft:#e8eeff;
+  --gold:#a8761b;
+  --gold-soft:#fdf3dd;
+  --ok:#1f7a4d;
+  --ok-soft:#e3f5eb;
+  --r-s:6px;
+  --r-m:10px;
+  --r-l:16px;
+  --sh-1:0 1px 2px rgba(22,22,31,.06),0 4px 14px rgba(22,22,31,.05);
+  --sh-2:0 2px 6px rgba(22,22,31,.08),0 12px 30px rgba(22,22,31,.08);
+  --sp-1:8px;--sp-2:12px;--sp-3:16px;--sp-4:24px;--sp-5:32px;--sp-6:48px;--sp-7:64px;
+  --fs-1:12px;--fs-2:13px;--fs-3:14px;--fs-4:16px;--fs-5:18px;--fs-6:22px;--fs-7:28px;--fs-8:36px;--fs-9:46px;
+  --font:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --sticky-h:0px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;font-family:var(--font);color:var(--ink);background:var(--paper-2);
+  font-size:var(--fs-4);line-height:1.75;letter-spacing:.01em;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0;line-height:1.35;letter-spacing:0}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+section[id],div[id]{scroll-margin-top:calc(var(--sticky-h) + 18px)}
+
+/* ---------- 吸顶容器 ---------- */
+.sticky-head{position:sticky;top:0;z-index:60}
+.notice{
+  background:var(--ink);color:#f2f1f6;font-size:var(--fs-2);line-height:1.6;
+}
+.notice .wrap{display:flex;gap:10px;align-items:center;padding:7px 20px;flex-wrap:wrap}
+.notice .tag{background:var(--brand);color:#fff;font-weight:700;font-size:var(--fs-1);padding:1px 8px;border-radius:999px;letter-spacing:.06em;white-space:nowrap}
+.notice b{color:#ffd166;font-weight:600}
+.notice a{color:#9fb6ff;white-space:nowrap}
+
+.header{background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(22,22,31,.02)}
+.header .bar{display:flex;align-items:center;gap:18px;padding:12px 20px;max-width:1180px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:800;flex-shrink:0}
+.brand:hover{text-decoration:none}
+.brand .mark{width:38px;height:38px;flex-shrink:0}
+.brand .word{font-size:var(--fs-5);letter-spacing:-.01em;white-space:nowrap}
+.nav{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.nav a{
+  color:var(--ink-2);font-size:var(--fs-3);padding:6px 10px;border-radius:var(--r-s);
+  white-space:nowrap;
+}
+.nav a:hover{background:var(--paper-3);text-decoration:none;color:var(--ink)}
+.nav a.on{background:var(--brand-soft);color:var(--brand-d);font-weight:700}
+.head-tools{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.search{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:999px;background:var(--paper-2);overflow:hidden}
+.search input{border:0;background:transparent;padding:7px 12px;font-size:var(--fs-2);width:126px;font-family:inherit;color:var(--ink)}
+.search input:focus{outline:none}
+.search button{border:0;background:var(--ink);color:#fff;padding:7px 13px;font-size:var(--fs-2);cursor:pointer;font-family:inherit;height:100%}
+.search button:hover{background:var(--brand)}
+.btn-ghost{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:var(--fs-2);color:var(--ink-2);background:#fff}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand-d);text-decoration:none}
+.menu-btn{display:none;border:1px solid var(--line);background:#fff;border-radius:var(--r-s);padding:7px 10px;cursor:pointer;font-family:inherit;font-size:var(--fs-2);color:var(--ink);align-items:center;gap:6px}
+.menu-btn svg{width:16px;height:16px}
+#searchOut{display:none;border-top:1px dashed var(--line);background:var(--paper-2);font-size:var(--fs-2)}
+#searchOut .wrap{padding:10px 20px}
+#searchOut b{color:var(--brand-d)}
+#searchOut .hit{display:inline-block;margin:3px 6px 3px 0;padding:2px 9px;background:#fff;border:1px solid var(--line);border-radius:999px;color:var(--ink-2)}
+#searchOut .hit:hover{border-color:var(--brand);color:var(--brand-d);text-decoration:none}
+
+/* ---------- 首屏 ---------- */
+.hero{position:relative;background:
+  radial-gradient(900px 340px at 88% -8%,#ffe3e9 0%,rgba(255,227,233,0) 62%),
+  radial-gradient(700px 300px at 4% 104%,#e6ecff 0%,rgba(230,236,255,0) 60%),
+  var(--paper);border-bottom:1px solid var(--line);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.06fr .94fr;gap:var(--sp-6);align-items:center;padding-top:var(--sp-7);padding-bottom:var(--sp-7)}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:var(--fs-2);color:var(--brand-d);background:var(--brand-soft);border:1px solid #ffc9d4;padding:3px 12px;border-radius:999px;font-weight:700}
+.hero h1{font-size:var(--fs-9);letter-spacing:-.02em;margin:14px 0 10px;line-height:1.14}
+.hero h1 .hl{background:linear-gradient(transparent 62%,#ffd166 62%);padding:0 2px}
+.hero .lede{font-size:var(--fs-5);color:var(--ink-2);max-width:33em;margin:0 0 var(--sp-3)}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin:var(--sp-4) 0 var(--sp-3)}
+.btn{display:inline-block;padding:11px 22px;border-radius:999px;font-weight:700;font-size:var(--fs-3);border:1px solid transparent}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 6px 18px rgba(232,39,75,.28)}
+.btn-primary:hover{background:var(--brand-d);text-decoration:none;transform:translateY(-1px)}
+.btn-line{border-color:var(--ink);color:var(--ink);background:#fff}
+.btn-line:hover{background:var(--ink);color:#fff;text-decoration:none;transform:translateY(-1px)}
+.hero-stats{display:flex;gap:0;border-top:1px solid var(--line-2);padding-top:var(--sp-3);margin-top:var(--sp-2);flex-wrap:wrap}
+.hero-stats div{padding-right:var(--sp-4);margin-right:var(--sp-4);border-right:1px solid var(--line-2)}
+.hero-stats div:last-child{border:0;margin:0;padding:0}
+.hero-stats b{display:block;font-size:var(--fs-6);color:var(--ink);line-height:1.2}
+.hero-stats span{font-size:var(--fs-1);color:var(--muted)}
+
+/* 原创 SVG 构图 */
+.hero-art{position:relative;min-height:360px}
+.hero-art svg{width:100%;height:auto;display:block}
+.art-note{position:absolute;background:#fff;border:1px solid var(--line);border-radius:var(--r-m);box-shadow:var(--sh-1);font-size:var(--fs-1);padding:6px 10px;color:var(--ink-2);line-height:1.5}
+.art-note.n1{top:6%;left:0}
+.art-note.n2{bottom:9%;right:0}
+.art-note b{color:var(--brand-d)}
+
+/* ---------- 三栏门户 ---------- */
+.layout{display:grid;grid-template-columns:216px minmax(0,1fr) 292px;gap:var(--sp-5);align-items:start;padding-top:var(--sp-6);padding-bottom:var(--sp-7)}
+.side-nav{position:sticky;top:calc(var(--sticky-h) + 16px)}
+.side-nav .card-title{font-size:var(--fs-1);letter-spacing:.14em;color:var(--muted);font-weight:700;margin:0 0 10px}
+.side-nav ul{list-style:none;margin:0;padding:0;border-left:2px solid var(--line-2)}
+.side-nav li a{display:block;padding:5px 0 5px 12px;font-size:var(--fs-2);color:var(--ink-2);border-left:2px solid transparent;margin-left:-2px}
+.side-nav li a:hover{color:var(--brand-d);text-decoration:none;background:var(--paper-3)}
+.side-nav li a.active{color:var(--brand-d);font-weight:700;border-left-color:var(--brand);background:var(--brand-soft)}
+.side-nav .mini{margin-top:var(--sp-4);font-size:var(--fs-1);color:var(--muted);line-height:1.7;border-top:1px solid var(--line-2);padding-top:10px}
+
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-l);padding:var(--sp-5);margin-bottom:var(--sp-4);box-shadow:var(--sh-1)}
+.panel > h2{font-size:var(--fs-6);margin-bottom:4px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.panel > h2 .num{font-size:var(--fs-1);color:var(--muted);font-weight:600;letter-spacing:.1em;font-family:ui-monospace,monospace}
+.panel .sub{color:var(--muted);font-size:var(--fs-2);margin:0 0 var(--sp-4)}
+.panel h3{font-size:var(--fs-5);margin:var(--sp-4) 0 var(--sp-1)}
+.panel p{margin:0 0 var(--sp-3);color:var(--ink-2)}
+.panel p:last-child{margin-bottom:0}
+.lead-p{font-size:var(--fs-4);color:var(--ink)}
+
+/* 概览：非对称组合 */
+.overview-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--sp-3);margin-top:var(--sp-3)}
+.ov-cell{border:1px solid var(--line-2);border-radius:var(--r-m);padding:var(--sp-3);background:var(--paper-2)}
+.ov-cell.big{background:linear-gradient(160deg,#fff 0%,#fff6f8 100%);border-color:#ffd4dd}
+.ov-cell h4{font-size:var(--fs-3);margin:0 0 6px;color:var(--ink)}
+.ov-cell p{font-size:var(--fs-2);margin:0;color:var(--ink-2)}
+.ov-cell .kpi{font-size:var(--fs-7);font-weight:800;color:var(--brand-d);line-height:1.1;letter-spacing:-.02em}
+.ov-cell .kpi small{font-size:var(--fs-2);color:var(--muted);font-weight:600;margin-left:4px}
+
+/* 精选内容：网格卡片 */
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-3)}
+.card{border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-2)}
+.card .thumb{aspect-ratio:16/9;width:100%;object-fit:cover;background:var(--paper-3)}
+.card .body{padding:var(--sp-3);display:flex;flex-direction:column;gap:6px;flex:1}
+.card .kind{font-size:var(--fs-1);color:var(--brand-d);font-weight:700;letter-spacing:.04em}
+.card h3{font-size:var(--fs-4);margin:0}
+.card .meta{font-size:var(--fs-1);color:var(--muted);margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
+.card .desc{font-size:var(--fs-2);color:var(--ink-2);margin:0}
+
+/* 最新更新：紧凑列表 + 时间线 */
+.updates{list-style:none;margin:var(--sp-2) 0 0;padding:0}
+.updates li{display:grid;grid-template-columns:86px 1fr;gap:14px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:var(--fs-3)}
+.updates li:last-child{border:0}
+.updates .time{font-family:ui-monospace,monospace;font-size:var(--fs-2);color:var(--brand-d);font-weight:700;padding-top:2px}
+.updates .what{color:var(--ink-2)}
+.updates .what b{color:var(--ink)}
+.updates .what .who{color:var(--muted);font-size:var(--fs-2)}
+
+/* 分类入口：标签索引 */
+.tag-index{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--sp-3)}
+.tag-index a{display:inline-flex;align-items:baseline;gap:7px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:var(--fs-3);color:var(--ink-2);background:var(--paper-2)}
+.tag-index a:hover{border-color:var(--brand);color:var(--brand-d);background:var(--brand-soft);text-decoration:none}
+.tag-index a span{font-size:var(--fs-1);color:var(--muted);font-family:ui-monospace,monospace}
+.tag-index a:hover span{color:var(--brand-d)}
+
+/* 深度解析：分栏正文 */
+.deep{border-left:4px solid var(--brand);padding-left:var(--sp-4);margin-top:var(--sp-2)}
+.deep h3{margin-top:var(--sp-4)}
+.deep h3:first-child{margin-top:0}
+.deep .claim{background:var(--paper-2);border:1px solid var(--line-2);border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 var(--r-s) var(--r-s) 0;margin:var(--sp-2) 0;font-size:var(--fs-3);color:var(--ink)}
+.deep .claim b{color:var(--gold)}
+.fact-table{width:100%;border-collapse:collapse;font-size:var(--fs-2);margin:var(--sp-2) 0 var(--sp-3)}
+.fact-table th,.fact-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.fact-table th{background:var(--paper-3);font-weight:700;color:var(--ink);width:112px}
+.fact-table td{color:var(--ink-2)}
+.quote-card{background:linear-gradient(135deg,var(--ink) 0%,#2b2b3d 100%);color:#eceaf3;border-radius:var(--r-m);padding:var(--sp-4);margin:var(--sp-3) 0;font-size:var(--fs-3)}
+.quote-card .q{font-size:var(--fs-5);line-height:1.6;margin:0 0 8px;color:#fff}
+.quote-card .who{color:#a9a6bd;font-size:var(--fs-2)}
+.quote-card .who b{color:#ffd166;font-weight:600}
+
+/* 体验指南：编号步骤 */
+.steps{counter-reset:s;list-style:none;margin:var(--sp-2) 0 0;padding:0;display:grid;gap:var(--sp-2)}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;font-size:var(--fs-3);color:var(--ink-2);background:var(--paper-2);border:1px solid var(--line-2);border-radius:var(--r-m);padding:12px 14px}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:ui-monospace,monospace;font-weight:800;color:var(--brand);font-size:var(--fs-3);padding-top:1px}
+.steps li b{color:var(--ink);display:block;font-size:var(--fs-3);margin-bottom:2px}
+.steps li .warn{color:var(--gold);font-size:var(--fs-2)}
+
+/* 对照面板 */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);margin-top:var(--sp-3)}
+.compare .col{border:1px solid var(--line);border-radius:var(--r-m);padding:var(--sp-3)}
+.compare .col.a{background:var(--ok-soft);border-color:#bfe6d2}
+.compare .col.b{background:var(--brand-soft);border-color:#ffc9d4}
+.compare h4{font-size:var(--fs-3);margin:0 0 8px;display:flex;align-items:center;gap:6px}
+.compare ul{margin:0;padding-left:18px;font-size:var(--fs-2);color:var(--ink-2)}
+.compare li{margin-bottom:5px}
+
+/* FAQ */
+details.faq{border-bottom:1px solid var(--line-2);padding:12px 0}
+details.faq:last-of-type{border-bottom:0}
+details.faq summary{cursor:pointer;font-weight:700;font-size:var(--fs-3);color:var(--ink);list-style:none;display:flex;gap:10px;align-items:baseline}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::before{content:"＋";color:var(--brand);font-weight:800;font-size:var(--fs-3);flex-shrink:0}
+details.faq[open] summary::before{content:"－"}
+details.faq .ans{font-size:var(--fs-3);color:var(--ink-2);padding:8px 0 2px 24px;margin:0}
+
+/* 评论 */
+.comments{display:grid;gap:var(--sp-2);margin-top:var(--sp-3)}
+.cmt{border:1px solid var(--line-2);border-radius:var(--r-m);padding:12px 14px;background:var(--paper-2);font-size:var(--fs-3);color:var(--ink-2)}
+.cmt .head{display:flex;gap:10px;align-items:baseline;margin-bottom:4px;flex-wrap:wrap}
+.cmt .who{font-weight:700;color:var(--ink)}
+.cmt .when{font-size:var(--fs-1);color:var(--muted);font-family:ui-monospace,monospace}
+.cmt .star{color:var(--gold);font-size:var(--fs-1);letter-spacing:1px}
+.cmt p{margin:0;font-size:var(--fs-3)}
+.cmt .ref{color:var(--brand-d);font-size:var(--fs-2)}
+
+/* 资讯列表 */
+.news-list{list-style:none;margin:var(--sp-2) 0 0;padding:0}
+.news-list li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:var(--fs-3)}
+.news-list li:last-child{border:0}
+.news-list .src{color:var(--muted);font-size:var(--fs-2);margin-left:6px}
+.news-list .date{font-family:ui-monospace,monospace;color:var(--brand-d);font-size:var(--fs-2);margin-right:8px}
+
+/* 相关推荐标签 */
+.reco{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--sp-3)}
+.reco a{font-size:var(--fs-2);padding:5px 12px;border-radius:var(--r-s);background:var(--accent-soft);color:#1b3aa8;border:1px solid #cdd9fb}
+.reco a:hover{background:#d6e0ff;text-decoration:none}
+
+/* 榜单 */
+.rank{list-style:none;margin:var(--sp-2) 0 0;padding:0;counter-reset:r}
+.rank li{counter-increment:r;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:var(--fs-3)}
+.rank li:last-child{border:0}
+.rank li::before{content:counter(r);font-family:ui-monospace,monospace;font-weight:800;color:#fff;background:var(--ink-2);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:var(--fs-1);align-self:center}
+.rank li:nth-child(1)::before{background:var(--brand)}
+.rank li:nth-child(2)::before{background:var(--gold)}
+.rank li:nth-child(3)::before{background:var(--accent)}
+.rank .v{font-family:ui-monospace,monospace;font-size:var(--fs-2);color:var(--muted)}
+.rank .t b{color:var(--ink)}
+
+/* 侧栏 */
+.rail{display:grid;gap:var(--sp-3)}
+.rail .panel{padding:var(--sp-4);margin:0}
+.rail h2{font-size:var(--fs-4);margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.rail h2::before{content:"";width:4px;height:16px;background:var(--brand);border-radius:2px;display:inline-block}
+.rail .kv{display:flex;justify-content:space-between;font-size:var(--fs-2);padding:6px 0;border-bottom:1px dashed var(--line-2);color:var(--ink-2)}
+.rail .kv:last-child{border:0}
+.rail .kv b{color:var(--ink);font-family:ui-monospace,monospace}
+.mini-list{list-style:none;margin:0;padding:0;font-size:var(--fs-2)}
+.mini-list li{padding:7px 0;border-bottom:1px dashed var(--line-2)}
+.mini-list li:last-child{border:0}
+.mini-list a{color:var(--ink-2)}
+.mini-list a:hover{color:var(--brand-d)}
+.mini-list .n{color:var(--muted);font-family:ui-monospace,monospace;font-size:var(--fs-1);margin-right:6px}
+.editor-note{font-size:var(--fs-2);color:var(--ink-2);background:var(--gold-soft);border:1px solid #edd9a8;border-radius:var(--r-m);padding:var(--sp-3)}
+.editor-note b{color:var(--gold)}
+
+/* 页尾 */
+.footer{background:var(--ink);color:#c9c7d6;padding:var(--sp-6) 0 var(--sp-4);font-size:var(--fs-2)}
+.footer .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--sp-5)}
+.footer .brand{color:#fff;margin-bottom:10px}
+.footer .brand .word{font-size:var(--fs-4)}
+.footer .pos{font-size:var(--fs-2);color:#a9a6bd;line-height:1.7;margin:0 0 10px}
+.footer h3{font-size:var(--fs-2);color:#fff;letter-spacing:.08em;margin:0 0 10px}
+.footer ul{list-style:none;margin:0;padding:0}
+.footer li{margin-bottom:6px}
+.footer a{color:#c9c7d6}
+.footer a:hover{color:#fff}
+.footer .bottom{border-top:1px solid #33333f;margin-top:var(--sp-5);padding-top:var(--sp-3);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:var(--fs-1);color:#8f8ca3}
+.footer .bottom .note{color:#8f8ca3}
+
+/* 回到顶部 */
+#toTop{position:fixed;right:18px;bottom:18px;z-index:80;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);box-shadow:var(--sh-2);cursor:pointer;display:none;place-items:center;font-size:var(--fs-4);font-family:inherit}
+#toTop.show{display:grid}
+#toTop:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* 响应式 */
+@media (max-width:1080px){
+  .layout{grid-template-columns:minmax(0,1fr) 280px}
+  .side-nav{display:none}
+  .hero .wrap{grid-template-columns:1fr;gap:var(--sp-4)}
+  .hero-art{min-height:auto;max-width:520px}
+  .overview-grid{grid-template-columns:1fr 1fr}
+  .overview-grid .ov-cell.big{grid-column:1/-1}
+  .footer .cols{grid-template-columns:1fr 1fr}
+}
+@media (max-width:780px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .rail{order:2}
+  .main-col{order:1}
+  .hero h1{font-size:var(--fs-8)}
+  .header .bar{flex-wrap:wrap;gap:10px}
+  .nav{order:3;flex-basis:100%;display:none}
+  .nav.open{display:flex}
+  .menu-btn{display:inline-flex}
+  .head-tools{margin-left:auto}
+  .search input{width:96px}
+  .card-grid{grid-template-columns:1fr}
+  .compare{grid-template-columns:1fr}
+  .panel{padding:var(--sp-4)}
+  .footer .cols{grid-template-columns:1fr}
+}
+@media (max-width:420px){
+  .hero h1{font-size:var(--fs-7)}
+  .hero-stats div{padding-right:14px;margin-right:14px}
+  .updates li{grid-template-columns:1fr;gap:2px}
+  .brand .word{font-size:var(--fs-4)}
+  .search input{width:78px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  .card:hover{transform:none}
+  .btn-primary:hover,.btn-line:hover{transform:none}
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<div class="sticky-head" id="stickyHead">
+  <div class="notice" role="status" aria-label="站内更新公告">
+    <div class="wrap">
+      <span class="tag">更新</span>
+      <span><b>2026-11-06</b> 抖音「三秒钩子」实测数据补齐：12 条对标视频平均完播 41.2%，比 10 月样本高 6.8 个点。</span>
+      <a href="/#latest">看完整记录</a>
+    </div>
+  </div>
+  <header class="header">
+    <div class="bar">
+      <a class="brand" href="/#" aria-label="艹死我的视频首页">
+        <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="播放键与火花标志">
+          <rect width="64" height="64" rx="14" fill="#16161f"/>
+          <path d="M22 17l25 15-25 15z" fill="#ff4d6d"/>
+          <path d="M46 10l2.2 5.4L54 17.6l-5.8 2.2L46 25l-2.2-5.2L38 17.6l5.8-2.2z" fill="#ffd166"/>
+          <rect x="9" y="47" width="16" height="4" rx="2" fill="#8b8ba6"/>
+          <rect x="9" y="54" width="9" height="3" rx="1.5" fill="#4c4c62"/>
+        </svg>
+        <span class="word">艹死我的视频</span>
+      </a>
+      <nav class="nav" id="mainNav" aria-label="主题导航">
+        <a href="/#overview">领域概览</a>
+        <a href="/#picks">精选推荐</a>
+        <a href="/#latest">最新更新</a>
+        <a href="/#channels">频道分类</a>
+        <a href="/#deep">深度解析</a>
+        <a href="/#guide">体验指南</a>
+        <a href="/#faq">常见问题</a>
+        <a href="/#comments">用户评论</a>
+        <a href="/#news">相关资讯</a>
+        <a href="/#rank">本周榜单</a>
+      </nav>
+      <div class="head-tools">
+        <form class="search" id="searchForm" role="search" aria-label="站内本地搜索">
+          <input id="q" type="search" placeholder="搜选题/剪辑/账号" aria-label="搜索关键词">
+          <button type="submit" aria-label="执行搜索">搜</button>
+        </form>
+        <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mainNav">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect y="3" width="16" height="2" rx="1" fill="currentColor"/><rect y="7" width="16" height="2" rx="1" fill="currentColor"/><rect y="11" width="16" height="2" rx="1" fill="currentColor"/></svg>
+          菜单
+        </button>
+      </div>
+    </div>
+    <div id="searchOut" aria-live="polite"><div class="wrap" id="searchMsg"></div></div>
+  </header>
+</div>
+
+<main>
+  <!-- 首屏 -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="hero-kicker">短视频拆解 · 2026 年第 45 周</span>
+        <h1><span class="hl">艹死我的视频</span></h1>
+        <p class="lede">把一条视频拆到骨头里：选题从哪来、前 3 秒怎么留人、剪辑点在哪儿断，以及平台推荐位到底奖励什么。这里记录 47 个账号的操作细节，只写能复核的时间和数字。</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="/#deep">读本周深度判断</a>
+          <a class="btn btn-line" href="/#guide">按步骤自查片单</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>47</b><span>跟踪账号</span></div>
+          <div><b>186</b><span>拆解条目</span></div>
+          <div><b>12</b><span>频道分类</span></div>
+          <div><b>6.8pt</b><span>完播率提升样本</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 460 360" role="img" aria-label="视频分镜与剪辑时间轴示意图">
+          <defs>
+            <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffe3e9"/><stop offset="1" stop-color="#e6ecff"/>
+            </linearGradient>
+            <linearGradient id="gB" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#16161f"/><stop offset="1" stop-color="#3a3a49"/>
+            </linearGradient>
+          </defs>
+          <rect x="10" y="14" width="440" height="332" rx="20" fill="url(#gA)" stroke="#ffc9d4"/>
+          <rect x="46" y="52" width="248" height="140" rx="12" fill="url(#gB)"/>
+          <circle cx="170" cy="122" r="30" fill="#ff4d6d"/>
+          <path d="M162 108l26 14-26 14z" fill="#fff"/>
+          <rect x="58" y="70" width="60" height="7" rx="3.5" fill="#8b8ba6"/>
+          <rect x="58" y="170" width="86" height="6" rx="3" fill="#ffd166"/>
+          <rect x="312" y="52" width="112" height="64" rx="10" fill="#fff" stroke="#dcdbe4"/>
+          <text x="326" y="80" font-size="15" font-family="monospace" fill="#b81a37" font-weight="700">3s</text>
+          <text x="356" y="80" font-size="12" font-family="sans-serif" fill="#6b6b7d">留人点</text>
+          <rect x="326" y="92" width="66" height="6" rx="3" fill="#e8274b"/>
+          <rect x="312" y="128" width="112" height="64" rx="10" fill="#fff" stroke="#dcdbe4"/>
+          <text x="326" y="156" font-size="15" font-family="monospace" fill="#a8761b" font-weight="700">41%</text>
+          <text x="368" y="156" font-size="12" font-family="sans-serif" fill="#6b6b7d">完播</text>
+          <rect x="326" y="168" width="52" height="6" rx="3" fill="#a8761b"/>
+          <rect x="46" y="220" width="378" height="74" rx="12" fill="#fff" stroke="#dcdbe4"/>
+          <g fill="#e8274b">
+            <rect x="62" y="238" width="54" height="14" rx="4"/>
+            <rect x="124" y="238" width="82" height="14" rx="4" opacity=".75"/>
+            <rect x="214" y="238" width="36" height="14" rx="4" opacity=".55"/>
+          </g>
+          <g fill="#1f4bd8">
+            <rect x="258" y="238" width="64" height="14" rx="4" opacity=".8"/>
+            <rect x="330" y="238" width="44" height="14" rx="4" opacity=".55"/>
+            <rect x="382" y="238" width="26" height="14" rx="4" opacity=".4"/>
+          </g>
+          <g stroke="#dcdbe4" stroke-width="1">
+            <line x1="62" y1="266" x2="408" y2="266"/>
+            <line x1="62" y1="258" x2="62" y2="274"/>
+            <line x1="170" y1="258" x2="170" y2="274"/>
+            <line x1="278" y1="258" x2="278" y2="274"/>
+            <line x1="408" y1="258" x2="408" y2="274"/>
+          </g>
+          <text x="58" y="288" font-size="10" font-family="monospace" fill="#8b8ba6">0s</text>
+          <text x="162" y="288" font-size="10" font-family="monospace" fill="#8b8ba6">8s</text>
+          <text x="268" y="288" font-size="10" font-family="monospace" fill="#8b8ba6">21s</text>
+          <text x="396" y="288" font-size="10" font-family="monospace" fill="#8b8ba6">45s</text>
+          <rect x="46" y="312" width="120" height="20" rx="10" fill="#16161f"/>
+          <text x="60" y="326" font-size="10" font-family="sans-serif" fill="#fff">分镜 7 段 · 45 秒</text>
+        </svg>
+        <span class="art-note n1">前 3 秒出现<b>人脸</b>的样本，完播高 4.6 点</span>
+        <span class="art-note n2">剪辑点平均<b>2.3 秒</b>一次</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 三栏布局 -->
+  <div class="wrap layout">
+    <!-- 左侧栏导航 -->
+    <aside class="side-nav" aria-label="页面栏目导航">
+      <p class="card-title">栏目</p>
+      <ul id="railList">
+        <li><a href="/#overview">领域概览</a></li>
+        <li><a href="/#picks">精选内容</a></li>
+        <li><a href="/#latest">最新更新</a></li>
+        <li><a href="/#channels">频道分类</a></li>
+        <li><a href="/#deep">深度解析</a></li>
+        <li><a href="/#guide">体验指南</a></li>
+        <li><a href="/#compare">方案对照</a></li>
+        <li><a href="/#faq">常见问题</a></li>
+        <li><a href="/#comments">用户评论</a></li>
+        <li><a href="/#news">相关资讯</a></li>
+        <li><a href="/#rank">本周榜单</a></li>
+        <li><a href="/#reco">相关推荐</a></li>
+      </ul>
+      <div class="mini">数据口径：2026-10-09 至 2026-11-08 抓取，样本来自公开可见的播放页与创作者后台截图。<br>示例数据，用于展示结构。</div>
+    </aside>
+
+    <!-- 主内容 -->
+    <div class="main-col">
+
+      <!-- 1 领域概览 -->
+      <section class="panel" id="overview">
+        <h2><span class="num">01</span>领域概览：一条视频的六个决策点</h2>
+        <p class="sub">从选题到投放，每个环节都有可量化的分叉口。</p>
+        <p class="lead-p">短视频不是单点创意，而是一条流水线。2026 年 10 月的样本里，播放量破千万的 14 条视频中，有 11 条在发布前改过标题，9 条重剪过开头。真正决定成败的，往往是第二版剪辑。</p>
+        <div class="overview-grid">
+          <div class="ov-cell big">
+            <div class="kpi">41.2<small>% 平均完播</small></div>
+            <h4>三秒钩子样本</h4>
+            <p>抖音账号「老周拆车」11 月 2 日发布的「电动车刹车异响」条目，开头直接放金属摩擦声，第 4 秒才出画面。完播 46.8%，比同账号其他条目高 12 个点。</p>
+          </div>
+          <div class="ov-cell">
+            <h4>选题来源</h4>
+            <p>评论区高频提问占 38%，同行视频二次翻拍占 27%，热点日历占 19%。</p>
+          </div>
+          <div class="ov-cell">
+            <h4>剪辑节奏</h4>
+            <p>45 秒以内条目平均 19 个剪辑点，2.3 秒切一次；超过 90 秒的降到 1.8 秒。</p>
+          </div>
+          <div class="ov-cell">
+            <h4>封面文案</h4>
+            <p>含数字的封面点击率 7.4%，纯文字的 5.1%，差 2.3 个点。</p>
+          </div>
+          <div class="ov-cell">
+            <h4>发布时间</h4>
+            <p>工作日 18:00—20:00 发布的条目，前 30 分钟播放中位数 2.1 万。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 精选内容推荐 -->
+      <section class="panel" id="picks">
+        <h2><span class="num">02</span>精选内容：本周值得逐帧看的 4 条</h2>
+        <p class="sub">按拆解价值排序，不按播放量。</p>
+        <div class="card-grid">
+          <article class="card">
+            <img class="thumb" src="https://picsum.photos/seed/caoche-pick1/640/360" width="640" height="360" loading="lazy" alt="手机竖屏视频分镜草图与时间轴标注">
+            <div class="body">
+              <span class="kind">分镜拆解</span>
+              <h3>「拆车老周」刹车异响：声音前置 4 秒的实验</h3>
+              <p class="desc">把故障音放在第一帧，画面延后。11 月 2 日发布，46.8% 完播，评论区 312 条追问型号。</p>
+              <div class="meta"><span>11-02</span><span>45 秒</span><span>7 段分镜</span></div>
+            </div>
+          </article>
+          <article class="card">
+            <img class="thumb" src="https://picsum.photos/seed/caoche-pick2/640/360" width="640" height="360" loading="lazy" alt="厨房台面上的食材与手机支架拍摄场景">
+            <div class="body">
+              <span class="kind">选题复盘</span>
+              <h3>「小满下厨」10 月 28 日剩菜改造：从评论区长出来的选题</h3>
+              <p class="desc">前一条视频第 7 楼留言「剩米饭怎么救」，作者 48 小时内拍出续集，播放 286 万。</p>
+              <div class="meta"><span>10-28</span><span>62 秒</span><span>评论区选题</span></div>
+            </div>
+          </article>
+          <article class="card">
+            <img class="thumb" src="https://picsum.photos/seed/caoche-pick3/640/360" width="640" height="360" loading="lazy" alt="夜景街头的手持拍摄画面与路灯">
+            <div class="body">
+              <span class="kind">运镜手法</span>
+              <h3>「夜行阿哲」手持夜拍：不防抖反而更稳的原因</h3>
+              <p class="desc">10 月 31 日发布的 8 个手持镜头，抖动幅度控制在画面高度的 1.5% 内。</p>
+              <div class="meta"><span>10-31</span><span>38 秒</span><span>8 个镜头</span></div>
+            </div>
+          </article>
+          <article class="card">
+            <img class="thumb" src="https://picsum.photos/seed/caoche-pick4/640/360" width="640" height="360" loading="lazy" alt="桌面上的脚本手稿与红色标注笔">
+            <div class="body">
+              <span class="kind">脚本结构</span>
+              <h3>「表格姐」11 月 4 日口播：三段式改成了两段</h3>
+              <p class="desc">删掉结尾总结段后，平均观看时长从 21.4 秒升到 27.9 秒。</p>
+              <div class="meta"><span>11-04</span><span>51 秒</span><span>结构对比</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3 最新更新 -->
+      <section class="panel" id="latest">
+        <h2><span class="num">03</span>最新更新：本周实测与条目补录</h2>
+        <p class="sub">按时间倒序，每条都带可回看的原始出处。</p>
+        <ul class="updates">
+          <li>
+            <span class="time">11-07</span>
+            <span class="what"><b>三秒钩子样本扩充到 12 条</b>，新增「小满下厨」与「夜行阿哲」两条，平均完播 41.2%。<span class="who">来源：创作者后台截图，发布于 11-06 晚间</span></span>
+          </li>
+          <li>
+            <span class="time">11-06</span>
+            <span class="what"><b>补充「表格姐」口播脚本版本差异</b>：V1 三段 51 秒，V2 两段 43 秒，V2 平均观看 27.9 秒。<span class="who">来源：账号 11-04 发布的对比视频</span></span>
+          </li>
+          <li>
+            <span class="time">11-05</span>
+            <span class="what"><b>修正 10-30 条目一处数字</b>：原写「剪辑点 23 个」，逐帧复核后为 19 个，已改。<span class="who">来源：本地逐帧计数</span></span>
+          </li>
+          <li>
+            <span class="time">11-03</span>
+            <span class="what"><b>新增「封面数字」对照实验</b>：同一账号 6 条视频，3 条带数字封面，点击率 7.4% 对 5.1%。<span class="who">来源：账号主页公开数据，10-20 至 10-27</span></span>
+          </li>
+          <li>
+            <span class="time">11-01</span>
+            <span class="what"><b>「拆车老周」账号口径更新</b>：作者在评论区回复，46.8% 完播是「发布后第 3 天」的数据，非首日。<span class="who">来源：视频评论区第 12 楼</span></span>
+          </li>
+          <li>
+            <span class="time">10-29</span>
+            <span class="what"><b>上线频道分类索引</b>，12 个类别按搜索词整理，替换原先的 8 类划分。<span class="who">来源：站内结构调整记录</span></span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 4 分类入口 -->
+      <section class="panel" id="channels">
+        <h2><span class="num">04</span>频道分类：按你会搜的词进</h2>
+        <p class="sub">12 个类别，括号内为本周新增条目数。</p>
+        <div class="tag-index">
+          <a href="/#picks">三秒钩子设计 <span>+4</span></a>
+          <a href="/#deep">剪辑节奏拆解 <span>+6</span></a>
+          <a href="/#guide">口播脚本结构 <span>+3</span></a>
+          <a href="/#latest">封面点击率实验 <span>+2</span></a>
+          <a href="/#picks">评论区选题法 <span>+5</span></a>
+          <a href="/#compare">手持夜拍运镜 <span>+3</span></a>
+          <a href="/#deep">完播率归因 <span>+7</span></a>
+          <a href="/#news">平台推荐机制 <span>+2</span></a>
+          <a href="/#rank">账号冷启动 <span>+4</span></a>
+          <a href="/#comments">翻拍与二创边界 <span>+1</span></a>
+          <a href="/#guide">设备与灯光 <span>+3</span></a>
+          <a href="/#faq">发布时段选择 <span>+2</span></a>
+        </div>
+      </section>
+
+      <!-- 5 深度解析 -->
+      <section class="panel" id="deep">
+        <h2><span class="num">05</span>深度解析：完播率是剪辑问题，不是选题问题</h2>
+        <p class="sub">本周唯一主体阅读区。三条可核对、也可被反驳的判断。</p>
+        <div class="deep">
+          <h3>判断一：前 3 秒决定上限，第 8 秒决定留存</h3>
+          <p>把「拆车老周」11 月 2 日的 45 秒条目逐帧拆开：0—3 秒只有声音没有画面，3—8 秒是故障部位特写，8 秒处第一次出现人脸。后台曲线显示，3 秒处留存 82%，8 秒处掉到 61%，人脸出现后 5 秒回升到 68%。</p>
+          <p>对比同账号 10 月 26 日另一条：开头直接人脸说话，3 秒留存 74%，8 秒留存 66%。两条的最终完播分别是 46.8% 和 33.1%。差别不在选题——都是刹车异响，而在第 8 秒有没有给「新信息」。</p>
+          <div class="claim"><b>可以反驳的地方：</b>样本只有同账号 2 条，发布间隔 7 天，平台流量池不同。若把 10 月 26 日那条放到 11 月 2 日发，结论未必成立。</div>
+
+          <h3>判断二：剪辑点密度存在倒 U 型，2.3 秒/次是当前甜点</h3>
+          <p>统计 47 个账号、186 条 45 秒以内视频：剪辑点间隔小于 1.5 秒的，完播中位数 34.6%；1.5—3 秒的 41.2%；大于 4 秒的 29.8%。1.5—3 秒这一档同时覆盖了「信息密度够」和「眼睛跟得上」。</p>
+          <table class="fact-table">
+            <caption class="sub" style="text-align:left;caption-side:top;padding-bottom:6px">剪辑点间隔与完播率对照（样本 186 条）</caption>
+            <tr><th>间隔区间</th><td>小于 1.5 秒：34.6%</td><td>1.5—3 秒：41.2%</td><td>大于 4 秒：29.8%</td></tr>
+            <tr><th>条目数</th><td>52 条</td><td>91 条</td><td>43 条</td></tr>
+            <tr><th>典型账号</th><td>快剪类，如「表格姐」</td><td>「拆车老周」「小满下厨」</td><td>口播长镜类</td></tr>
+          </table>
+          <p>「表格姐」11 月 4 日那条 43 秒视频只有 9 个剪辑点，间隔 4.8 秒，完播 38.4%，低于甜点区但高于同档中位数。说明口播类可以靠信息本身撑住节奏，前提是每 4 秒有一句可被引用的话。</p>
+
+          <h3>判断三：封面数字的收益在「具体」，不在「大」</h3>
+          <p>同一账号 6 条视频的封面实验：写「省了 3400 元」的点击率 7.4%，写「省钱攻略」的 5.1%，写「10000 元」的 5.9%。数字越大不等于点击越高，3400 因为贴近真实账单更可信。</p>
+          <div class="quote-card">
+            <p class="q">「我把 3400 改成 3 千 4，点击反而掉了。观众要的是能对上账的数，不是整数。」</p>
+            <p class="who">—— <b>表格姐</b>，11 月 5 日直播口述，转述自其账号回放 12:41 处</p>
+          </div>
+          <p>这条属于创作者自述，未做 A/B 复现。可以确认的是 6 条视频的封面文案与点击率数据在账号主页可见；不能确认的是「3400」这个具体数字对所有品类都有效。</p>
+
+          <h3>说法差异：平台侧与创作者侧对「完播」的定义不同</h3>
+          <p>抖音创作者后台把「完播」定义为播放到最后一帧；第三方数据工具常把「播放超过 90%」算完播。两者在同一条 45 秒视频上能差 4—6 个点。「拆车老周」那条 46.8% 是后台口径，第三方工具显示 41.3%。引用数字时必须标口径，否则跨账号比较没有意义。</p>
+        </div>
+      </section>
+
+      <!-- 6 体验指南 -->
+      <section class="panel" id="guide">
+        <h2><span class="num">06</span>体验指南：拿到一条视频后的 6 步自查</h2>
+        <p class="sub">按顺序做，每步都有可停下来的判断点。</p>
+        <ol class="steps">
+          <li><b>先看后台曲线，不看播放量</b>3 秒、8 秒、15 秒三个点的留存，比总数有用。掉得最陡的那一段，就是问题段。<span class="warn">如果曲线是平台不提供的，用第三方工具，但记住口径差 4—6 点。</span></li>
+          <li><b>数剪辑点，按秒记</b>45 秒以内数一遍，算平均间隔。落在 1.5—3 秒之外的，先怀疑节奏而不是内容。</li>
+          <li><b>把开头 3 秒单独截出来看</b>关掉声音看一遍，再开着声音看一遍。两次感受差得越多，说明声音承担的信息越重。</li>
+          <li><b>找「新信息」出现在第几秒</b>人脸、数字、反转、实物特写，四类里至少一类要在 8 秒前出现。</li>
+          <li><b>核对封面文案与视频内容是否对得上</b>对不上的封面会拉高点击、拉低完播，后台会看到「高点击低留存」的剪刀差。</li>
+          <li><b>换一个发布时段复测</b>同一内容在 18:00 与 22:00 各发一次（或隔周同星期），比较前 30 分钟播放中位数。</li>
+        </ol>
+      </section>
+
+      <!-- 7 方案对照 -->
+      <section class="panel" id="compare">
+        <h2><span class="num">07</span>方案对照：声音前置 vs 人脸前置</h2>
+        <p class="sub">两种开头都有人用，适用条件不同。</p>
+        <div class="compare">
+          <div class="col a">
+            <h4>声音前置</h4>
+            <ul>
+              <li>适合：故障声、锅气、脚步声等有辨识度的现场音</li>
+              <li>样本：「拆车老周」11-02，完播 46.8%</li>
+              <li>风险：静音刷视频的用户直接划走，约占 31%</li>
+              <li>前提：声音本身要「怪」到让人停下</li>
+            </ul>
+          </div>
+          <div class="col b">
+            <h4>人脸前置</h4>
+            <ul>
+              <li>适合：口播、观点输出、需要建立信任的品类</li>
+              <li>样本：「表格姐」11-04，完播 38.4%</li>
+              <li>风险：前 3 秒没给新信息，第 8 秒掉 15 个点</li>
+              <li>前提：第一句话必须是一句可被引用的话</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:var(--sp-3)">两类开头没有绝对优劣。「拆车老周」10-26 用人脸前置只拿到 33.1%，换声音前置后升到 46.8%；但「表格姐」把声音前置用在口播上，完播跌到 31.2%。匹配品类比追方法重要。</p>
+      </section>
+
+      <!-- 8 FAQ -->
+      <section class="panel" id="faq">
+        <h2><span class="num">08</span>常见问题</h2>
+        <p class="sub">问题来自评论区与后台私信，答案只写能核对的。</p>
+        <details class="faq" open>
+          <summary>三秒钩子必须有人脸吗？</summary>
+          <p class="ans">不一定。声音、实物特写、异常画面都能承担前 3 秒的留人任务。「拆车老周」11-02 那条前 3 秒只有金属摩擦声，完播仍到 46.8%。判断标准是「有没有一个让人想确认是什么的信息缺口」，不是有没有脸。</p>
+        </details>
+        <details class="faq">
+          <summary>剪辑点越多越好吗？</summary>
+          <p class="ans">186 条样本里，间隔小于 1.5 秒的完播中位数 34.6%，低于 1.5—3 秒档的 41.2%。剪太碎会让观众来不及建立上下文。口播类甚至可以放到 4 秒以上，只要每段有一句能记住的话。</p>
+        </details>
+        <details class="faq">
+          <summary>封面写大数字点击更高吗？</summary>
+          <p class="ans">不是。同一账号 6 条实验里，「省了 3400 元」点击率 7.4%，「10000 元」5.9%，「省钱攻略」5.1%。贴近真实账单的具体数字比整数大数更有效，因为观众能对上账。</p>
+        </details>
+        <details class="faq">
+          <summary>第三方工具的完播率和后台对不上，信哪个？</summary>
+          <p class="ans">两个口径不同。后台算「播到最后一帧」，第三方常算「播放超过 90%」，同一条 45 秒视频能差 4—6 个点。跨账号比较时统一用同一个口径，否则结论会反向。</p>
+        </details>
+        <details class="faq">
+          <summary>评论区选题怎么落地成脚本？</summary>
+          <p class="ans">「小满下厨」10-28 的做法是：把第 7 楼留言原话放在开头念出来，再给三个解决方案。从留言到发布 48 小时，播放 286 万。关键是保留原话，让提问的人认得出自己。</p>
+        </details>
+        <details class="faq">
+          <summary>发布时间真的影响很大吗？</summary>
+          <p class="ans">工作日 18:00—20:00 发布的条目，前 30 分钟播放中位数 2.1 万；同账号 22:00 后发布的样本中位数 1.4 万。差 50%，但样本只覆盖 47 个账号，不能推到所有品类。</p>
+        </details>
+      </section>
+
+      <!-- 9 用户评论 -->
+      <section class="panel" id="comments">
+        <h2><span class="num">09</span>用户评论：12 条里 5 条在说具体条目</h2>
+        <p class="sub">保留原话语气，包括不认同的。</p>
+        <div class="comments">
+          <div class="cmt">
+            <div class="head"><span class="who">剪辑学徒小林</span><span class="when">11-07 09:12</span><span class="star">★★★★★</span></div>
+            <p>把「拆车老周」那条数了一遍，确实是 19 个剪辑点，不是 23。之前按 23 算的平均间隔全错了。<span class="ref">指向：11-05 修正条目</span></p>
+          </div>
+          <div class="cmt">
+            <div class="head"><span class="who">夜拍阿哲的观众</span><span class="when">11-07 01:40</span><span class="star">★★★★☆</span></div>
+            <p>手持夜拍那 8 个镜头我逐帧看了，第 5 个镜头其实有轻微滚转，说「控制在 1.5%」有点乐观。<span class="ref">指向：精选第 3 条</span></p>
+          </div>
+          <div class="cmt">
+            <div class="head"><span class="who">做口播的老韩</span><span class="when">11-06 20:05</span><span class="star">★★★☆☆</span></div>
+            <p>倒 U 型这个说法我不太信。口播类本来剪辑点就少，把它和快剪混在一个样本里算中位数，会把两端拉平。分品类算可能结论不一样。<span class="ref">指向：深度解析判断二</span></p>
+          </div>
+          <div class="cmt">
+            <div class="head"><span class="who">小满下厨的粉丝</span><span class="when">11-06 14:22</span><span class="star">★★★★★</span></div>
+            <p>10-28 那期剩米饭我真的去做了，按视频里的水量做出来是散的，评论区也有人说散。视频里没提米种差异。<span class="ref">指向：精选第 2 条</span></p>
+          </div>
+          <div class="cmt">
+            <div class="head"><span class="who">匿名</span><span class="when">11-05 22:47</span><span class="star">★★☆☆☆</span></div>
+            <p>数据都是示例吧，47 个账号里能查到后台曲线的有几个？没有后台的账号，完播数字从哪来。<span class="ref">指向：全站数据口径</span></p>
+          </div>
+          <div class="cmt">
+            <div class="head"><span class="who">表格姐的同行</span><span class="when">11-05 18:30</span><span class="star">★★★★☆</span></div>
+            <p>3400 那个封面我也试了，放到家装类目不行，点击 4.2%。观众对金额的敏感度和品类强相关。<span class="ref">指向：深度解析判断三</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10 相关资讯 -->
+      <section class="panel" id="news">
+        <h2><span class="num">10</span>相关资讯</h2>
+        <p class="sub">只收有明确出处的条目，摘要不复述标题。</p>
+        <ul class="news-list">
+          <li><span class="date">11-07</span>抖音创作者学院更新「封面与标题」课程，把「数字具体化」列进推荐做法，页面标注版本 v3.2。<span class="src">来源：创作者学院课程页</span></li>
+          <li><span class="date">11-05</span>「表格姐」在直播里回应封面实验，称 3400 改成「3 千 4」后点击下降，未给出具体数值。<span class="src">来源：直播回放 12:41</span></li>
+          <li><span class="date">11-03</span>第三方数据工具「短数」调整完播口径说明，从「播放 90%」改为分档显示，新增 95% 档。<span class="src">来源：工具更新日志</span></li>
+          <li><span class="date">10-31</span>「夜行阿哲」发布手持夜拍合集，8 个镜头共 38 秒，评论区有人质疑第 5 镜头的稳定性。<span class="src">来源：账号主页</span></li>
+        </ul>
+      </section>
+
+      <!-- 11 本周榜单 -->
+      <section class="panel" id="rank">
+        <h2><span class="num">11</span>本周榜单：拆解价值前 6</h2>
+        <p class="sub">按「可复核信息量」排序，不按播放量。</p>
+        <ol class="rank">
+          <li><span class="t"><b>拆车老周 · 刹车异响 45 秒</b>（声音前置样本）</span><span class="v">46.8%</span></li>
+          <li><span class="t"><b>表格姐 · 两段式口播 43 秒</b>（结构对比）</span><span class="v">38.4%</span></li>
+          <li><span class="t"><b>小满下厨 · 剩米饭改造</b>（评论区选题）</span><span class="v">286 万播放</span></li>
+          <li><span class="t"><b>夜行阿哲 · 手持夜拍 8 镜</b>（运镜拆解）</span><span class="v">1.5% 抖动</span></li>
+          <li><span class="t"><b>老韩口播 · 4 秒长镜实验</b>（反例样本）</span><span class="v">31.2%</span></li>
+          <li><span class="t"><b>封面数字 6 条对照</b>（A/B 记录）</span><span class="v">7.4% 点击</span></li>
+        </ol>
+      </section>
+
+      <!-- 12 相关推荐 -->
+      <section class="panel" id="reco">
+        <h2><span class="num">12</span>相关推荐</h2>
+        <p class="sub">按你可能继续查的方向给入口。</p>
+        <div class="reco">
+          <a href="/#deep">完播率曲线怎么读</a>
+          <a href="/#guide">剪辑点间隔速查</a>
+          <a href="/#picks">三秒钩子案例库</a>
+          <a href="/#faq">封面数字怎么写</a>
+          <a href="/#news">平台完播口径差异</a>
+          <a href="/#comments">口播长镜的争议</a>
+          <a href="/#compare">声音前置适用品类</a>
+          <a href="/#latest">本周修正记录</a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- 右侧栏 -->
+    <aside class="rail" aria-label="侧栏补充信息">
+      <div class="panel">
+        <h2>数据口径</h2>
+        <div class="kv"><span>抓取区间</span><b>10-09 → 11-08</b></div>
+        <div class="kv"><span>跟踪账号</span><b>47</b></div>
+        <div class="kv"><span>拆解条目</span><b>186</b></div>
+        <div class="kv"><span>有后台截图</span><b>19</b></div>
+        <div class="kv"><span>仅公开可见</span><b>167</b></div>
+        <p style="font-size:var(--fs-1);color:var(--muted);margin-top:10px">后台截图仅用于核对完播口径，不对外展示原图。示例数据，用于展示结构。</p>
+      </div>
+
+      <div class="panel">
+        <h2>本周核对表</h2>
+        <ul class="mini-list">
+          <li><span class="n">✔</span><a href="/#latest">19 个剪辑点，已逐帧复核</a></li>
+          <li><span class="n">✔</span><a href="/#deep">46.8% 标注为第 3 天数据</a></li>
+          <li><span class="n">✔</span><a href="/#faq">后台与第三方口径差 4—6 点</a></li>
+          <li><span class="n">✖</span><a href="/#comments">3400 封面实验未做 A/B 复现</a></li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h2>创作者证言</h2>
+        <div class="editor-note">
+          <p style="margin:0 0 6px"><b>「小满下厨」</b>10-29 在评论区回复：剩米饭那期的水量是按东北米写的，南方籼米确实会散，下期补一句。</p>
+          <p style="margin:0;font-size:var(--fs-1);color:var(--muted)">转述自视频评论区第 31 楼，未改写原意。</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>常查词</h2>
+        <div class="reco" style="margin-top:0">
+          <a href="/#deep">倒 U 型</a>
+          <a href="/#picks">声音前置</a>
+          <a href="/#faq">完播口径</a>
+          <a href="/#rank">拆解价值</a>
+          <a href="/#latest">逐帧复核</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="/#top" aria-label="返回页首">
+          <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="播放键标志">
+            <rect width="64" height="64" rx="14" fill="#2b2b3d"/>
+            <path d="M22 17l25 15-25 15z" fill="#ff4d6d"/>
+            <path d="M46 10l2.2 5.4L54 17.6l-5.8 2.2L46 25l-2.2-5.2L38 17.6l5.8-2.2z" fill="#ffd166"/>
+          </svg>
+          <span class="word">艹死我的视频</span>
+        </a>
+        <p class="pos">拆解短视频的剪辑点、完播曲线与封面实验，记录可复核的时间、数字和口径差异。</p>
+        <p style="font-size:var(--fs-1);color:#8f8ca3;margin:0">内容更新时间：2026-11-07，对应正文「最新更新」中的三秒钩子扩充与 11-05 修正条目。</p>
+      </div>
+      <div>
+        <h3>拆解方向</h3>
+        <ul>
+          <li><a href="/#overview">领域概览</a></li>
+          <li><a href="/#picks">精选内容</a></li>
+          <li><a href="/#deep">深度解析</a></li>
+          <li><a href="/#guide">体验指南</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>索引与互动</h3>
+        <ul>
+          <li><a href="/#channels">频道分类</a></li>
+          <li><a href="/#faq">常见问题</a></li>
+          <li><a href="/#comments">用户评论</a></li>
+          <li><a href="/#rank">本周榜单</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>信息说明</h3>
+        <ul>
+          <li><a href="/#news">相关资讯</a></li>
+          <li><a href="/#reco">相关推荐</a></li>
+          <li><a href="/#latest">更新与修正</a></li>
+          <li><a href="/#compare">方案对照</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© 2026 艹死我的视频 · 内容为示例数据，用于展示结构。所有账号名、数字与时间仅供核对演示。</span>
+      <span class="note">完播口径：后台「播到最后一帧」；第三方「播放 90%」，两者差 4—6 点。</span>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" type="button" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var stickyHead=document.getElementById('stickyHead');
+  var root=document.documentElement;
+  function syncSticky(){
+    var h=stickyHead?stickyHead.offsetHeight:0;
+    root.style.setProperty('--sticky-h',h+'px');
+  }
+  syncSticky();
+  window.addEventListener('resize',syncSticky);
+  if(window.ResizeObserver&&stickyHead){new ResizeObserver(syncSticky).observe(stickyHead);}
+
+  /* 移动端菜单 */
+  var menuBtn=document.getElementById('menuBtn');
+  var nav=document.getElementById('mainNav');
+  if(menuBtn&&nav){
+    menuBtn.addEventListener('click',function(){
+      var open=nav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded',open?'true':'false');
+    });
+    nav.addEventListener('click',function(e){
+      if(e.target.tagName==='A'&&window.innerWidth<=780){
+        nav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&nav.classList.contains('open')){
+        nav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded','false');
+        menuBtn.focus();
+      }
+    });
+  }
+
+  /* 本地搜索 */
+  var form=document.getElementById('searchForm');
+  var q=document.getElementById('q');
+  var out=document.getElementById('searchOut');
+  var msg=document.getElementById('searchMsg');
+  var index=[];
+  document.querySelectorAll('main h2, main h3, main .card h3, main details summary, main .updates .what b, main .rank .t b, main .news-list li, main .tag-index a, main .reco a').forEach(function(el){
+    var sec=el.closest('section[id]');
+    var text=(el.textContent||'').trim();
+    if(text.length>1&&sec){
+      index.push({t:text,id:sec.id});
+    }
+  });
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  if(form){
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var key=(q.value||'').trim().toLowerCase();
+      out.style.display='block';
+      if(!key){
+        msg.innerHTML='输入关键词后再搜，例如「三秒钩子」「封面数字」「完播口径」。';
+        return;
+      }
+      var seen={},hits=[];
+      index.forEach(function(item){
+        if(item.t.toLowerCase().indexOf(key)>-1&&!seen[item.id]){
+          seen[item.id]=1;hits.push(item);
+        }
+      });
+      if(!hits.length){
+        msg.innerHTML='没有找到与「<b>'+esc(q.value)+'</b>」匹配的栏目或条目。可试试「剪辑点」「封面」「评论选题」「完播」。';
+        return;
+      }
+      msg.innerHTML='找到 '+hits.length+' 处：'+hits.map(function(h){
+        return '<a class="hit" href="/#'+h.id+'">'+esc(h.t.slice(0,26))+'</a>';
+      }).join('');
+    });
+  }
+
+  /* 侧栏滚动高亮 */
+  var railLinks=Array.prototype.slice.call(document.querySelectorAll('#railList a'));
+  var targets=railLinks.map(function(a){
+    var id=a.getAttribute('href').replace('/#','');
+    return document.getElementById(id);
+  });
+  if('IntersectionObserver' in window&&railLinks.length){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          railLinks.forEach(function(a){a.classList.remove('active');});
+          var i=targets.indexOf(en.target);
+          if(i>-1)railLinks[i].classList.add('active');
+        }
+      });
+    },{rootMargin:'-30% 0px -60% 0px',threshold:0});
+    targets.forEach(function(t){if(t)io.observe(t);});
+  }
+
+  /* 回到顶部 */
+  var toTop=document.getElementById('toTop');
+  function toggleTop(){
+    if(window.scrollY>520){toTop.classList.add('show');}
+    else{toTop.classList.remove('show');}
+  }
+  window.addEventListener('scroll',toggleTop,{passive:true});
+  toggleTop();
+  toTop.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"艹死我的视频",
+  "description":"围绕短视频选题、剪辑节奏与平台推荐机制的观察站，记录可复核的时间、数字与口径差异。",
+  "inLanguage":"zh-CN"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"三秒钩子必须有人脸吗？","acceptedAnswer":{"@type":"Answer","text":"不一定。声音、实物特写、异常画面都能承担前 3 秒的留人任务。判断标准是有没有一个让人想确认是什么的信息缺口，不是有没有脸。"}},
+    {"@type":"Question","name":"剪辑点越多越好吗？","acceptedAnswer":{"@type":"Answer","text":"186 条样本里，间隔小于 1.5 秒的完播中位数 34.6%，低于 1.5—3 秒档的 41.2%。剪太碎会让观众来不及建立上下文。"}},
+    {"@type":"Question","name":"封面写大数字点击更高吗？","acceptedAnswer":{"@type":"Answer","text":"不是。同一账号实验里，省了 3400 元点击率 7.4%，10000 元 5.9%，省钱攻略 5.1%。贴近真实账单的具体数字比整数大数更有效。"}},
+    {"@type":"Question","name":"第三方工具的完播率和后台对不上，信哪个？","acceptedAnswer":{"@type":"Answer","text":"两个口径不同。后台算播到最后一帧，第三方常算播放超过 90%，同一条 45 秒视频能差 4—6 个点。跨账号比较时统一用同一个口径。"}},
+    {"@type":"Question","name":"评论区选题怎么落地成脚本？","acceptedAnswer":{"@type":"Answer","text":"小满下厨 10-28 的做法是把第 7 楼留言原话放在开头念出来，再给三个解决方案，从留言到发布 48 小时。"}},
+    {"@type":"Question","name":"发布时间真的影响很大吗？","acceptedAnswer":{"@type":"Answer","text":"工作日 18:00—20:00 发布的条目，前 30 分钟播放中位数 2.1 万；同账号 22:00 后发布的样本中位数 1.4 万。差 50%，但样本只覆盖 47 个账号。"}}
+  ]
+}
+</script>
+</body>
+          </html>
